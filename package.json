@@ -9,6 +9,11 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^26.6.5",
     "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "@clerk/clerk-js": "^6.39.0",
+    "convex": "^1.46.0"
   }
 }
