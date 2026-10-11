@@ -1,0 +1,17 @@
+ pages/sessions.html                  |  22 [32m++[m
+ recovered-ui/css/style.css           | 511 [32m+++++++++++++++++++++++++++++++++++[m
+ recovered-ui/index.html              |  52 [32m++++[m
+ recovered-ui/js/discover.js          |  76 [32m++++++[m
+ recovered-ui/js/nav.js               |  40 [32m+++[m
+ recovered-ui/pages/admin.html        |  22 [32m++[m
+ recovered-ui/pages/chat.html         |   0
+ recovered-ui/pages/connections.html  |  22 [32m++[m
+ recovered-ui/pages/dashboard.html    |  22 [32m++[m
+ recovered-ui/pages/discover.html     | 183 [32m+++++++++++++[m
+ recovered-ui/pages/login.html        |  22 [32m++[m
+ recovered-ui/pages/profile.html      |  22 [32m++[m
+ recovered-ui/pages/register.html     |  22 [32m++[m
+ recovered-ui/pages/sessions.html     |  22 [32m++[m
+ recovered-ui/pages/verification.html |  22 [32m++[m
+ recovered-ui/settings.json           |   3 [32m+[m
+ 16 files changed, 1063 insertions(+)
