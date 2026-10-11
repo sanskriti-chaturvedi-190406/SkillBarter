@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | SkillBarter</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .chat-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px 45px;
+            color: #26352B;
+        }
+
+        .chat-heading { margin-bottom: 24px; }
+
+        .chat-heading h1 {
+            margin: 0 0 8px;
+            font-size: clamp(28px, 4vw, 36px);
+        }
+
+        .chat-heading p {
+            color: #69766B;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .chat-shell {
+            display: grid;
+            grid-template-columns: 310px minmax(0, 1fr);
+            height: min(690px, 75vh);
+            min-height: 480px;
+            background: #FFFEFA;
+            border: 1px solid #D9E1D6;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .chat-sidebar {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #D9E1D6;
+            min-height: 0;
+        }
+
+        .sidebar-header { padding: 22px 18px 15px; }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            margin: 0 0 15px;
+        }
+
+        .chat-search {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #D9E1D6;
+            border-radius: 10px;
+            background: #F8F8F2;
+            color: #26352B;
+            font: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .chat-search:focus,
+        .message-input:focus {
+            border-color: #4F7057;
+            box-shadow: 0 0 0 3px rgba(79, 112, 87, 0.1);
+        }
+
+        .conversation-list {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .conversation {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px;
+            border: 0;
+            border-top: 1px solid #EEF0E9;
+            width: 100%;
+            background: transparent;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .conversation:hover,
+        .conversation.active {
+            background: #E8EEE5;
+        }
+
+        /* Ensure filtered conversations actually disappear */
+        .conversation[hidden] {
+            display: none !important;
+        }
+
+        .contact-avatar {
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            background: #E8EEE5;
+            color: #355640;
+            font-weight: 750;
+        }
+
+        .conversation-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conversation-name {
+            font-size: 13px;
+            font-weight: 750;
+            margin-bottom: 5px;
+        }
+
+        .conversation-preview {
+            font-size: 12px;
+            color: #69766B;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .no-search-results {
+            padding: 22px 16px;
+            text-align: center;
+            color: #69766B;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .chat-contact-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 17px 22px;
+            border-bottom: 1px solid #D9E1D6;
+        }
+
+        .chat-contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-contact-info h2 {
+            font-size: 15px;
+            margin: 0 0 5px;
+        }
+
+        .chat-contact-info p {
+            font-size: 12px;
+            color: #69766B;
+            margin: 0;
+        }
+
+        .online-indicator {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #6D9671;
+            margin-right: 5px;
+        }
+
+        .skill-context {
+            background: #F3F5EF;
+            border-bottom: 1px solid #D9E1D6;
+            padding: 11px 22px;
+            color: #536657;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .messages-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+            background: #FAFAF6;
+        }
+
+        .message-date {
+            align-self: center;
+            color: #69766B;
+            background: #EEF0E9;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+        .message-row {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 80%;
+        }
+
+        .message-row.mine {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message-bubble {
+            padding: 12px 15px;
+            border-radius: 15px 15px 15px 4px;
+            background: #E8EEE5;
+            color: #26352B;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .message-row.mine .message-bubble {
+            background: #355640;
+            color: white;
+            border-radius: 15px 15px 4px 15px;
+        }
+
+        .message-time {
+            color: #8A968A;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .chat-compose {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 16px;
+            border-top: 1px solid #D9E1D6;
+            background: #FFFEFA;
+        }
+
+        .message-input {
+            flex: 1;
+            min-width: 0;
+            resize: none;
+            min-height: 42px;
+            max-height: 100px;
+            box-sizing: border-box;
+            border: 1px solid #D9E1D6;
+            border-radius: 11px;
+            padding: 12px;
+            background: #F8F8F2;
+            color: #26352B;
+            font: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .send-button {
+            height: 42px;
+            padding: 0 18px;
+            border: none;
+            border-radius: 10px;
+            background: #355640;
+            color: white;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 650;
+            cursor: pointer;
+        }
+
+        .send-button:hover { background: #263F2F; }
+
+        .chat-empty {
+            margin: auto;
+            padding: 24px;
+            text-align: center;
+            color: #69766B;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 760px) {
+            .chat-page { padding: 24px 12px 35px; }
+
+            .chat-shell {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto minmax(0, 1fr);
+                height: 75vh;
+                min-height: 540px;
+            }
+
+            .chat-sidebar {
+                border-right: none;
+                border-bottom: 1px solid #D9E1D6;
+                max-height: 170px;
+            }
+
+            .sidebar-header { padding: 13px; }
+            .sidebar-header h2 { margin-bottom: 9px; }
+
+            .conversation-list {
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .conversation {
+                min-width: 160px;
+                width: auto;
+                border-top: none;
+                padding: 10px;
+            }
+
+            .conversation-preview { max-width: 100px; }
+            .messages-area { padding: 16px 12px; }
+            .chat-contact-header { padding: 13px; }
+            .skill-context { padding: 10px 13px; }
+            .message-row { max-width: 92%; }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <main class="chat-page">
+        <header class="chat-heading">
+            <h1>Your conversations</h1>
+            <p>Good collaborations start with a conversation.</p>
+        </header>
+
+        <section class="chat-shell">
+            <aside class="chat-sidebar">
+                <div class="sidebar-header">
+                    <h2>Messages</h2>
+                    <input
+                        type="search"
+                        class="chat-search"
+                        id="chat-search"
+                        placeholder="Search conversations..."
+                        aria-label="Search conversations"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="conversation-list" id="conversation-list">
+                    <button class="conversation active"
+                        type="button"
+                        data-contact="meera"
+                        data-name="Meera Kapoor"
+                        data-initial="M"
+                        data-context="Meera can teach Python, and wants to learn UI Design.">
+                        <span class="contact-avatar">M</span>
+                        <span class="conversation-info">
+                            <span class="conversation-name">Meera Kapoor</span>
+                            <span class="conversation-preview">Let's plan our first exchange!</span>
+                        </span>
+                    </button>
+
+                    <button class="conversation"
+                        type="button"
+                        data-contact="rohan"
+                        data-name="Rohan Verma"
+                        data-initial="R"
+                        data-context="Rohan can teach Figma, and wants to learn JavaScript.">
+                        <span class="contact-avatar">R</span>
+                        <span class="conversation-info">
+                            <span class="conversation-name">Rohan Verma</span>
+                            <span class="conversation-preview">Thanks for connecting!</span>
+                        </span>
+                    </button>
+
+                    <button class="conversation"
+                        type="button"
+                        data-contact="aarav"
+                        data-name="Aarav Sharma"
+                        data-initial="A"
+                        data-context="Aarav can teach JavaScript, and wants to learn Python.">
+                        <span class="contact-avatar">A</span>
+                        <span class="conversation-info">
+                            <span class="conversation-name">Aarav Sharma</span>
+                            <span class="conversation-preview">Ready to learn together?</span>
+                        </span>
+                    </button>
+
+                    <div class="no-search-results" id="no-search-results" hidden>
+                        No conversations found. Try another name or skill.
+                    </div>
+                </div>
+            </aside>
+
+            <section class="chat-main">
+                <header class="chat-contact-header">
+                    <div class="contact-avatar" id="active-avatar">M</div>
+                    <div class="chat-contact-info">
+                        <h2 id="active-name">Meera Kapoor</h2>
+                        <p><span class="online-indicator"></span>Skill exchange partner</p>
+                    </div>
+                </header>
+
+                <div class="skill-context" id="skill-context">
+                    Meera can teach Python, and wants to learn UI Design.
+                </div>
+
+                <div class="messages-area"
+                    id="messages-area"
+                    aria-live="polite"
+                    aria-label="Conversation messages">
+                </div>
+
+                <form class="chat-compose" id="chat-form">
+                    <textarea
+                        class="message-input"
+                        id="message-input"
+                        placeholder="Write a message..."
+                        rows="1"
+                        aria-label="Write a message"
+                        required
+                    ></textarea>
+                    <button class="send-button" type="submit">Send ↑</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/nav.js"></script>
+
+    <script>
+        const conversations = {
+            meera: [
+                {
+                    text: "Hey! I'm excited to exchange skills with you.",
+                    mine: false,
+                    time: "10:30 AM"
+                },
+                {
+                    text: "Same here! I'd love to learn more about Python.",
+                    mine: true,
+                    time: "10:32 AM"
+                },
+                {
+                    text: "Let's plan our first exchange!",
+                    mine: false,
+                    time: "10:34 AM"
+                }
+            ],
+            rohan: [
+                {
+                    text: "Hi! Thanks for connecting.",
+                    mine: false,
+                    time: "Yesterday"
+                },
+                {
+                    text: "I'd love to learn Figma from you.",
+                    mine: true,
+                    time: "Yesterday"
+                }
+            ],
+            aarav: [
+                {
+                    text: "Hey! Ready to learn together?",
+                    mine: false,
+                    time: "Monday"
+                }
+            ]
+        };
+
+        const conversationList = document.getElementById("conversation-list");
+        const messagesArea = document.getElementById("messages-area");
+        const messageInput = document.getElementById("message-input");
+        const chatForm = document.getElementById("chat-form");
+        const searchInput = document.getElementById("chat-search");
+        const noSearchResults = document.getElementById("no-search-results");
+        const conversationButtons = Array.from(
+            document.querySelectorAll(".conversation")
+        );
+
+        let activeContact = "meera";
+
+        function renderMessages() {
+            messagesArea.replaceChildren();
+
+            const dateLabel = document.createElement("div");
+            dateLabel.className = "message-date";
+            dateLabel.textContent = "Conversation preview";
+            messagesArea.appendChild(dateLabel);
+
+            const messages = conversations[activeContact] || [];
+
+            if (messages.length === 0) {
+                const empty = document.createElement("p");
+                empty.className = "chat-empty";
+                empty.textContent = "No messages yet. Start the conversation!";
+                messagesArea.appendChild(empty);
+                return;
+            }
+
+            messages.forEach(message => {
+                const row = document.createElement("div");
+                row.className = "message-row" +
+                    (message.mine ? " mine" : "");
+
+                const bubble = document.createElement("div");
+                bubble.className = "message-bubble";
+                bubble.textContent = message.text;
+
+                const time = document.createElement("span");
+                time.className = "message-time";
+                time.textContent = message.time;
+
+                row.append(bubble, time);
+                messagesArea.appendChild(row);
+            });
+
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        function openConversation(button) {
+            if (!button || button.hidden) return;
+
+            activeContact = button.dataset.contact;
+
+            conversationButtons.forEach(item => {
+                item.classList.toggle("active", item === button);
+            });
+
+            document.getElementById("active-name").textContent =
+                button.dataset.name;
+
+            document.getElementById("active-avatar").textContent =
+                button.dataset.initial;
+
+            document.getElementById("skill-context").textContent =
+                button.dataset.context;
+
+            renderMessages();
+        }
+
+        conversationList.addEventListener("click", event => {
+            const button = event.target.closest(".conversation");
+            if (button) openConversation(button);
+        });
+
+        // SEARCH: filter by name, skills, preview, and message content.
+        function filterConversations() {
+            const query = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            conversationButtons.forEach(button => {
+                const contactId = button.dataset.contact;
+                const name = button.dataset.name || "";
+                const context = button.dataset.context || "";
+                const preview = button.querySelector(
+                    ".conversation-preview"
+                )?.textContent || "";
+
+                const messageText = (conversations[contactId] || [])
+                    .map(message => message.text)
+                    .join(" ");
+
+                const searchableText = [
+                    name,
+                    context,
+                    preview,
+                    messageText
+                ].join(" ").toLowerCase();
+
+                const matches = searchableText.includes(query);
+
+                button.hidden = !matches;
+
+                if (matches) visibleCount++;
+            });
+
+            noSearchResults.hidden = visibleCount !== 0;
+
+            // If the active chat is filtered out, open the first visible one.
+            const activeButton = conversationButtons.find(
+                button =>
+                    button.dataset.contact === activeContact &&
+                    !button.hidden
+            );
+
+            if (!activeButton) {
+                const firstVisible = conversationButtons.find(
+                    button => !button.hidden
+                );
+
+                if (firstVisible) {
+                    openConversation(firstVisible);
+                }
+            }
+        }
+
+        searchInput.addEventListener("input", filterConversations);
+
+        chatForm.addEventListener("submit", event => {
+            event.preventDefault();
+
+            const text = messageInput.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const time = now.toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            conversations[activeContact].push({
+                text: text,
+                mine: true,
+                time: time
+            });
+
+            const activeButton = conversationButtons.find(
+                button => button.dataset.contact === activeContact
+            );
+
+            if (activeButton) {
+                activeButton.querySelector(".conversation-preview")
+                    .textContent = text;
+            }
+
+            messageInput.value = "";
+
+            // Refresh results in case the new message matches the search.
+            filterConversations();
+            renderMessages();
+            messageInput.focus();
+        });
+
+        renderMessages();
+    </script>
+</body>
+</html>

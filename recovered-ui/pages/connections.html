@@ -3,20 +3,702 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connections| SkillBarter</title>
+
+    <title>My Connections | SkillBarter</title>
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .connections-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 42px 24px 60px;
+            color: #26352B;
+        }
+
+        .connections-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .connections-header h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            letter-spacing: -1px;
+            margin: 0 0 10px;
+        }
+
+        .connections-header p {
+            color: #69766B;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .discover-link {
+            background: #355640;
+            color: white;
+            text-decoration: none;
+            padding: 12px 17px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .discover-link:hover {
+            background: #263F2F;
+        }
+
+        .connection-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .connection-stat {
+            background: #FFFEFA;
+            border: 1px solid #D9E1D6;
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .stat-label {
+            color: #69766B;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 750;
+        }
+
+        .connection-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #D9E1D6;
+            margin-bottom: 24px;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 13px 15px;
+            color: #69766B;
+            cursor: pointer;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 650;
+            margin-bottom: -1px;
+        }
+
+        .tab-button.active {
+            color: #355640;
+            border-bottom-color: #355640;
+        }
+
+        .tab-button:focus-visible,
+        .request-button:focus-visible,
+        .discover-link:focus-visible {
+            outline: 2px solid #355640;
+            outline-offset: 3px;
+        }
+
+        .connection-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .connection-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #FFFEFA;
+            border: 1px solid #D9E1D6;
+            border-radius: 18px;
+            padding: 22px;
+            min-width: 0;
+            transition: border-color 0.2s ease;
+        }
+
+        .connection-card:hover {
+            border-color: #A9BBA8;
+        }
+
+        .person-avatar {
+            width: 58px;
+            height: 58px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #E8EEE5;
+            color: #355640;
+            font-size: 21px;
+            font-weight: 750;
+        }
+
+        .person-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .person-name-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-bottom: 7px;
+        }
+
+        .person-name {
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+        .verified-tag {
+            font-size: 11px;
+            color: #355640;
+            background: #E8EEE5;
+            border-radius: 20px;
+            padding: 4px 8px;
+            font-weight: 650;
+        }
+
+        .person-bio {
+            color: #69766B;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 12px;
+        }
+
+        .skill-exchange {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .skill-chip {
+            padding: 6px 9px;
+            border-radius: 7px;
+            background: #F0F2E9;
+            color: #355640;
+        }
+
+        .exchange-arrow {
+            color: #8A968A;
+            font-size: 16px;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .request-button {
+            border: 1px solid #D9E1D6;
+            background: #FFFEFA;
+            color: #355640;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 650;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .request-button.accept {
+            background: #355640;
+            border-color: #355640;
+            color: white;
+        }
+
+        .request-button.accept:hover {
+            background: #263F2F;
+        }
+
+        .request-button.decline:hover {
+            background: #F7EDEA;
+            border-color: #D9B7AD;
+        }
+
+        .request-status {
+            display: inline-block;
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .request-status.accepted {
+            background: #E8EEE5;
+            color: #355640;
+        }
+
+        .request-status.pending {
+            background: #F3EFE3;
+            color: #866D37;
+        }
+
+        .request-status.declined {
+            background: #F7EDEA;
+            color: #8B5548;
+        }
+
+        .empty-state {
+            background: #FFFEFA;
+            border: 1px dashed #C9D5C8;
+            border-radius: 18px;
+            text-align: center;
+            padding: 48px 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 19px;
+            margin: 0 0 9px;
+        }
+
+        .empty-state p {
+            color: #69766B;
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0 0 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 750px) {
+            .connection-card {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .person-details {
+                width: calc(100% - 80px);
+            }
+
+            .request-actions {
+                width: 100%;
+                padding-left: 76px;
+            }
+
+            .connection-stats {
+                gap: 10px;
+            }
+
+            .connection-stat {
+                padding: 15px;
+            }
+
+            .stat-value {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .connections-page {
+                padding: 28px 15px 40px;
+            }
+
+            .connection-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .connection-stat {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .stat-label {
+                margin-bottom: 0;
+            }
+
+            .connection-card {
+                gap: 12px;
+                padding: 17px;
+            }
+
+            .person-avatar {
+                width: 48px;
+                height: 48px;
+            }
+
+            .person-details {
+                width: calc(100% - 62px);
+            }
+
+            .request-actions {
+                padding-left: 0;
+            }
+
+            .request-button {
+                flex: 1;
+            }
+
+            .skill-exchange {
+                gap: 6px;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div id="navbar-container"></div>
-    <main class="dashboard-content">
-        <h1>Dashboard</h1>
-        <p class="hero-description">
-            Connections will appear here.
+
+    <main class="connections-page">
+
+        <header class="connections-header">
+            <div>
+                <h1>My Connections</h1>
+                <p>
+                    Good things happen when people share what they know.
+                    Manage your skill exchanges here.
+                </p>
+            </div>
+
+            <a href="discover.html" class="discover-link">
+                Find people to learn with →
+            </a>
+        </header>
+
+        <section class="connection-stats" aria-label="Connection summary">
+            <article class="connection-stat">
+                <div class="stat-label">Total connections</div>
+                <div class="stat-value" id="total-count">1</div>
+            </article>
+
+            <article class="connection-stat">
+                <div class="stat-label">Pending requests</div>
+                <div class="stat-value" id="pending-count">2</div>
+            </article>
+
+            <article class="connection-stat">
+                <div class="stat-label">Accepted</div>
+                <div class="stat-value" id="accepted-count">1</div>
+            </article>
+        </section>
+
+        <nav class="connection-tabs" aria-label="Filter connections">
+            <button class="tab-button active" data-filter="all">
+                All <span id="all-tab-count">4</span>
+            </button>
+
+            <button class="tab-button" data-filter="received">
+                Received <span id="received-tab-count">2</span>
+            </button>
+
+            <button class="tab-button" data-filter="accepted">
+                Accepted <span id="accepted-tab-count">1</span>
+            </button>
+
+            <button class="tab-button" data-filter="sent">
+                Sent <span id="sent-tab-count">1</span>
+            </button>
+        </nav>
+
+        <section class="connection-list" id="connection-list">
+
+            <article
+                class="connection-card"
+                data-type="received"
+                data-status="pending"
+                data-name="meera kapoor"
+            >
+                <div class="person-avatar">M</div>
+
+                <div class="person-details">
+                    <div class="person-name-row">
+                        <span class="person-name">Meera Kapoor</span>
+                        <span class="verified-tag">✓ Verified</span>
+                    </div>
+
+                    <p class="person-bio">
+                        Interested in data, coding, and helping others learn.
+                    </p>
+
+                    <div class="skill-exchange">
+                        <span class="skill-chip">Teaches Python</span>
+                        <span class="exchange-arrow">↔</span>
+                        <span class="skill-chip">Wants UI Design</span>
+                    </div>
+                </div>
+
+                <div class="request-actions">
+                    <button class="request-button accept" data-action="accept">
+                        Accept
+                    </button>
+                    <button class="request-button decline" data-action="decline">
+                        Decline
+                    </button>
+                </div>
+            </article>
+
+            <article
+                class="connection-card"
+                data-type="received"
+                data-status="pending"
+                data-name="aarav sharma"
+            >
+                <div class="person-avatar">A</div>
+
+                <div class="person-details">
+                    <div class="person-name-row">
+                        <span class="person-name">Aarav Sharma</span>
+                        <span class="verified-tag">✓ Verified</span>
+                    </div>
+
+                    <p class="person-bio">
+                        Frontend enthusiast who enjoys building creative interfaces.
+                    </p>
+
+                    <div class="skill-exchange">
+                        <span class="skill-chip">Teaches JavaScript</span>
+                        <span class="exchange-arrow">↔</span>
+                        <span class="skill-chip">Wants Python</span>
+                    </div>
+                </div>
+
+                <div class="request-actions">
+                    <button class="request-button accept" data-action="accept">
+                        Accept
+                    </button>
+                    <button class="request-button decline" data-action="decline">
+                        Decline
+                    </button>
+                </div>
+            </article>
+
+            <article
+                class="connection-card"
+                data-type="accepted"
+                data-status="accepted"
+                data-name="rohan verma"
+            >
+                <div class="person-avatar">R</div>
+
+                <div class="person-details">
+                    <div class="person-name-row">
+                        <span class="person-name">Rohan Verma</span>
+                        <span class="verified-tag">✓ Verified</span>
+                    </div>
+
+                    <p class="person-bio">
+                        UI design learner interested in collaborative projects.
+                    </p>
+
+                    <div class="skill-exchange">
+                        <span class="skill-chip">Teaches Figma</span>
+                        <span class="exchange-arrow">↔</span>
+                        <span class="skill-chip">Wants JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="request-actions">
+                    <span class="request-status accepted">Connected ✓</span>
+                    <a
+                        href="chat.html"
+                        class="request-button"
+                        style="text-decoration:none"
+                    >
+                        Message
+                    </a>
+                </div>
+            </article>
+
+            <article
+                class="connection-card"
+                data-type="sent"
+                data-status="pending"
+                data-name="ananya gupta"
+            >
+                <div class="person-avatar">A</div>
+
+                <div class="person-details">
+                    <div class="person-name-row">
+                        <span class="person-name">Ananya Gupta</span>
+                    </div>
+
+                    <p class="person-bio">
+                        Exploring web development and user experience design.
+                    </p>
+
+                    <div class="skill-exchange">
+                        <span class="skill-chip">You offer HTML & CSS</span>
+                        <span class="exchange-arrow">↔</span>
+                        <span class="skill-chip">You want React</span>
+                    </div>
+                </div>
+
+                <div class="request-actions">
+                    <span class="request-status pending">Request pending</span>
+                </div>
+            </article>
+
+        </section>
+
+        <section class="empty-state hidden" id="empty-state">
+            <h3>No connections in this section yet</h3>
+            <p>Explore SkillBarter to meet people who complement your skills.</p>
+            <a href="discover.html" class="discover-link">
+                Explore people →
+            </a>
+        </section>
+
+        <p style="color:#69766B;font-size:12px;line-height:1.6;margin-top:20px">
+            Demo data: connection changes are temporary and reset when this
+            page is refreshed. A backend will be needed to save real requests.
         </p>
-        <a href="../index.html" class="btn-primary">
-            Back to Home
-        </a>
+
     </main>
+
     <script src="../js/nav.js"></script>
+
+    <script>
+        const cards = [
+            ...document.querySelectorAll(".connection-card")
+        ];
+
+        const tabs = [
+            ...document.querySelectorAll(".tab-button")
+        ];
+
+        const emptyState = document.getElementById("empty-state");
+
+        let currentFilter = "all";
+
+        function updateCounts() {
+            const received = cards.filter(
+                card => card.dataset.type === "received"
+                    && card.dataset.status === "pending"
+            ).length;
+
+            const accepted = cards.filter(
+                card => card.dataset.status === "accepted"
+            ).length;
+
+            const sent = cards.filter(
+                card => card.dataset.type === "sent"
+            ).length;
+
+            const total = cards.filter(
+                card => card.dataset.status === "accepted"
+            ).length;
+
+            document.getElementById("total-count").textContent = total;
+            document.getElementById("pending-count").textContent = received;
+            document.getElementById("accepted-count").textContent = accepted;
+
+            document.getElementById("all-tab-count").textContent =
+                cards.length;
+
+            document.getElementById("received-tab-count").textContent =
+                received;
+
+            document.getElementById("accepted-tab-count").textContent =
+                accepted;
+
+            document.getElementById("sent-tab-count").textContent = sent;
+        }
+
+        function applyFilter(filter) {
+            currentFilter = filter;
+
+            tabs.forEach(tab => {
+                const isActive = tab.dataset.filter === filter;
+                tab.classList.toggle("active", isActive);
+                tab.setAttribute("aria-pressed", String(isActive));
+            });
+
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const type = card.dataset.type;
+                const status = card.dataset.status;
+
+                let visible = filter === "all";
+
+                if (filter === "received") {
+                    visible = type === "received" && status === "pending";
+                } else if (filter === "accepted") {
+                    visible = status === "accepted";
+                } else if (filter === "sent") {
+                    visible = type === "sent";
+                }
+
+                card.classList.toggle("hidden", !visible);
+
+                if (visible) visibleCount++;
+            });
+
+            emptyState.classList.toggle("hidden", visibleCount > 0);
+        }
+
+        tabs.forEach(tab => {
+            tab.setAttribute(
+                "aria-pressed",
+                String(tab.classList.contains("active"))
+            );
+
+            tab.addEventListener("click", () => {
+                applyFilter(tab.dataset.filter);
+            });
+        });
+
+        cards.forEach(card => {
+            const acceptButton = card.querySelector('[data-action="accept"]');
+            const declineButton = card.querySelector('[data-action="decline"]');
+
+            if (acceptButton) {
+                acceptButton.addEventListener("click", () => {
+                    card.dataset.status = "accepted";
+                    card.dataset.type = "accepted";
+
+                    const actions = card.querySelector(".request-actions");
+                    actions.innerHTML = `
+                        <span class="request-status accepted">Connected ✓</span>
+                        <a href="chat.html"
+                           class="request-button"
+                           style="text-decoration:none">Message</a>
+                    `;
+
+                    updateCounts();
+                    applyFilter(currentFilter);
+                });
+            }
+
+            if (declineButton) {
+                declineButton.addEventListener("click", () => {
+                    card.dataset.status = "declined";
+
+                    const actions = card.querySelector(".request-actions");
+                    actions.innerHTML = `
+                        <span class="request-status declined">Request declined</span>
+                    `;
+
+                    updateCounts();
+                    applyFilter(currentFilter);
+                });
+            }
+        });
+
+        updateCounts();
+        applyFilter("all");
+    </script>
 </body>
 </html>
+```
