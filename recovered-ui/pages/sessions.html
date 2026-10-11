@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Sessions | SkillBarter</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .sessions-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 42px 24px 60px;
+            color: #26352B;
+        }
+
+        .sessions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .sessions-header h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            letter-spacing: -1px;
+            margin: 0 0 10px;
+        }
+
+        .sessions-header p {
+            color: #69766B;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .session-primary-button {
+            background: #355640;
+            color: white;
+            border: 1px solid #355640;
+            padding: 12px 17px;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 650;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .session-primary-button:hover {
+            background: #263F2F;
+        }
+
+        .session-secondary-button {
+            background: #FFFEFA;
+            color: #355640;
+            border: 1px solid #D9E1D6;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 650;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .session-secondary-button:hover {
+            background: #E8EEE5;
+        }
+
+        .session-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 34px;
+        }
+
+        .session-stat {
+            padding: 21px;
+            border: 1px solid #D9E1D6;
+            background: #FFFEFA;
+            border-radius: 16px;
+        }
+
+        .session-stat-label {
+            color: #69766B;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .session-stat-value {
+            font-size: 27px;
+            font-weight: 750;
+        }
+
+        .sessions-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .sessions-toolbar h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .session-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            background: #FFFEFA;
+            color: #69766B;
+            border: 1px solid #D9E1D6;
+            padding: 9px 13px;
+            border-radius: 9px;
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .filter-button.active {
+            color: white;
+            background: #355640;
+            border-color: #355640;
+        }
+
+        .session-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .session-card {
+            display: grid;
+            grid-template-columns: 82px minmax(0, 1fr) auto;
+            gap: 22px;
+            align-items: center;
+            padding: 22px;
+            background: #FFFEFA;
+            border: 1px solid #D9E1D6;
+            border-radius: 18px;
+        }
+
+        .session-date {
+            background: #E8EEE5;
+            color: #355640;
+            border-radius: 13px;
+            text-align: center;
+            padding: 13px 8px;
+        }
+
+        .session-month {
+            display: block;
+            font-size: 11px;
+            font-weight: 750;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .session-day {
+            display: block;
+            font-size: 27px;
+            font-weight: 750;
+            margin-top: 3px;
+        }
+
+        .session-info {
+            min-width: 0;
+        }
+
+        .session-title-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 8px;
+        }
+
+        .session-title {
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+        .session-badge {
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 20px;
+            padding: 5px 9px;
+        }
+
+        .session-badge.upcoming {
+            background: #E8EEE5;
+            color: #355640;
+        }
+
+        .session-badge.completed {
+            background: #EEF0E9;
+            color: #69766B;
+        }
+
+        .session-badge.cancelled {
+            background: #F7EDEA;
+            color: #8B5548;
+        }
+
+        .session-description {
+            color: #69766B;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 0 0 10px;
+        }
+
+        .session-meta {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            color: #536657;
+            font-size: 12px;
+        }
+
+        .session-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            align-items: stretch;
+        }
+
+        .empty-sessions {
+            text-align: center;
+            background: #FFFEFA;
+            border: 1px dashed #C9D5C8;
+            border-radius: 18px;
+            padding: 45px 20px;
+        }
+
+        .empty-sessions h3 {
+            margin: 0 0 8px;
+        }
+
+        .empty-sessions p {
+            color: #69766B;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 0 0 18px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(27, 40, 30, 0.45);
+            display: grid;
+            place-items: center;
+            padding: 18px;
+        }
+
+        .session-modal {
+            width: min(100%, 470px);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #FFFEFA;
+            border: 1px solid #D9E1D6;
+            border-radius: 20px;
+            padding: 26px;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.16);
+        }
+
+        .modal-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .modal-heading h2 {
+            font-size: 22px;
+            margin: 0 0 7px;
+        }
+
+        .modal-heading p {
+            color: #69766B;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .modal-close {
+            border: none;
+            background: #E8EEE5;
+            color: #355640;
+            border-radius: 9px;
+            width: 34px;
+            height: 34px;
+            font-size: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .session-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .form-field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .form-field label {
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #D9E1D6;
+            border-radius: 9px;
+            padding: 11px 12px;
+            font: inherit;
+            font-size: 13px;
+            background: #FAFAF6;
+            color: #26352B;
+        }
+
+        .form-field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: 2px solid #C9D8C7;
+            border-color: #4F7057;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .session-notice {
+            color: #69766B;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .sessions-page {
+                padding: 28px 15px 40px;
+            }
+
+            .session-stats {
+                gap: 9px;
+            }
+
+            .session-stat {
+                padding: 14px;
+            }
+
+            .session-stat-value {
+                font-size: 22px;
+            }
+
+            .session-card {
+                grid-template-columns: 60px minmax(0, 1fr);
+                gap: 13px;
+                padding: 16px;
+            }
+
+            .session-date {
+                padding: 12px 5px;
+            }
+
+            .session-day {
+                font-size: 23px;
+            }
+
+            .session-actions {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .session-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .session-stat {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .session-stat-label {
+                margin: 0;
+            }
+
+            .sessions-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .session-title {
+                font-size: 15px;
+            }
+
+            .session-meta {
+                gap: 8px;
+            }
+
+            .session-modal {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <main class="sessions-page">
+        <header class="sessions-header">
+            <div>
+                <h1>Learning Sessions</h1>
+                <p>Turn your connections into shared learning experiences.</p>
+            </div>
+
+            <button class="session-primary-button" id="open-modal">
+                + Schedule a session
+            </button>
+        </header>
+
+        <section class="session-stats">
+            <article class="session-stat">
+                <div class="session-stat-label">Upcoming sessions</div>
+                <div class="session-stat-value" id="upcoming-count">2</div>
+            </article>
+
+            <article class="session-stat">
+                <div class="session-stat-label">Completed sessions</div>
+                <div class="session-stat-value" id="completed-count">1</div>
+            </article>
+
+            <article class="session-stat">
+                <div class="session-stat-label">Cancelled sessions</div>
+                <div class="session-stat-value" id="cancelled-count">0</div>
+            </article>
+        </section>
+
+        <section>
+            <div class="sessions-toolbar">
+                <h2>Your sessions</h2>
+
+                <div class="session-filters" aria-label="Filter sessions">
+                    <button class="filter-button active" data-filter="all">
+                        All
+                    </button>
+                    <button class="filter-button" data-filter="upcoming">
+                        Upcoming
+                    </button>
+                    <button class="filter-button" data-filter="completed">
+                        Completed
+                    </button>
+                    <button class="filter-button" data-filter="cancelled">
+                        Cancelled
+                    </button>
+                </div>
+            </div>
+
+            <div class="session-list" id="session-list">
+
+                <article class="session-card"
+                    data-status="upcoming"
+                    data-day="18"
+                    data-month="Oct"
+                    data-date="2026-10-18">
+                    <div class="session-date">
+                        <span class="session-month">Oct</span>
+                        <span class="session-day">18</span>
+                    </div>
+
+                    <div class="session-info">
+                        <div class="session-title-row">
+                            <span class="session-title">Python for Beginners</span>
+                            <span class="session-badge upcoming">Upcoming</span>
+                        </div>
+
+                        <p class="session-description">
+                            Learn Python fundamentals and practise writing
+                            your first functions with Meera.
+                        </p>
+
+                        <div class="session-meta">
+                            <span>With Meera Kapoor</span>
+                            <span>11:00 AM</span>
+                            <span>45 minutes</span>
+                        </div>
+                    </div>
+
+                    <div class="session-actions">
+                        <button class="session-secondary-button cancel-session">
+                            Cancel
+                        </button>
+                    </div>
+                </article>
+
+                <article class="session-card"
+                    data-status="upcoming"
+                    data-day="21"
+                    data-month="Oct"
+                    data-date="2026-10-21">
+                    <div class="session-date">
+                        <span class="session-month">Oct</span>
+                        <span class="session-day">21</span>
+                    </div>
+
+                    <div class="session-info">
+                        <div class="session-title-row">
+                            <span class="session-title">Introduction to Figma</span>
+                            <span class="session-badge upcoming">Upcoming</span>
+                        </div>
+
+                        <p class="session-description">
+                            Explore layouts, frames, and reusable design
+                            components with Rohan.
+                        </p>
+
+                        <div class="session-meta">
+                            <span>With Rohan Verma</span>
+                            <span>4:00 PM</span>
+                            <span>60 minutes</span>
+                        </div>
+                    </div>
+
+                    <div class="session-actions">
+                        <button class="session-secondary-button cancel-session">
+                            Cancel
+                        </button>
+                    </div>
+                </article>
+
+                <article class="session-card"
+                    data-status="completed"
+                    data-day="08"
+                    data-month="Oct"
+                    data-date="2026-10-08">
+                    <div class="session-date">
+                        <span class="session-month">Oct</span>
+                        <span class="session-day">08</span>
+                    </div>
+
+                    <div class="session-info">
+                        <div class="session-title-row">
+                            <span class="session-title">HTML & CSS Basics</span>
+                            <span class="session-badge completed">Completed</span>
+                        </div>
+
+                        <p class="session-description">
+                            An introduction to page structure, styling,
+                            and responsive layouts.
+                        </p>
+
+                        <div class="session-meta">
+                            <span>With Aarav Sharma</span>
+                            <span>Completed session</span>
+                        </div>
+                    </div>
+
+                    <div class="session-actions">
+                        <span class="session-badge completed">Finished ✓</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <section class="empty-sessions hidden" id="empty-sessions">
+                <h3 id="empty-title">No sessions here yet</h3>
+                <p id="empty-description">
+                    Schedule a learning session to get started.
+                </p>
+                <button class="session-primary-button" id="empty-schedule">
+                    Schedule a session
+                </button>
+            </section>
+        </section>
+
+        <p class="session-notice">
+            Demo mode: session scheduling and cancellation are stored only
+            in the current page state. Connect a backend to persist sessions
+            across refreshes and devices.
+        </p>
+    </main>
+
+    <div class="modal-backdrop hidden" id="session-modal">
+        <section class="session-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title">
+
+            <div class="modal-heading">
+                <div>
+                    <h2 id="modal-title">Schedule a session</h2>
+                    <p>Plan a focused skill exchange with a learning partner.</p>
+                </div>
+                <button type="button" class="modal-close" id="close-modal"
+                    aria-label="Close dialog">×</button>
+            </div>
+
+            <form class="session-form" id="session-form">
+                <div class="form-field">
+                    <label for="session-title-input">Session topic</label>
+                    <input id="session-title-input" required maxlength="80"
+                        placeholder="e.g. JavaScript fundamentals">
+                </div>
+
+                <div class="form-field">
+                    <label for="session-partner">Learning partner</label>
+                    <select id="session-partner" required>
+                        <option value="">Choose a partner</option>
+                        <option value="Meera Kapoor">Meera Kapoor</option>
+                        <option value="Rohan Verma">Rohan Verma</option>
+                        <option value="Aarav Sharma">Aarav Sharma</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="session-date-input">Date</label>
+                    <input type="date" id="session-date-input" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="session-time-input">Start time</label>
+                    <input type="time" id="session-time-input" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="session-duration">Duration</label>
+                    <select id="session-duration" required>
+                        <option value="30">30 minutes</option>
+                        <option value="45" selected>45 minutes</option>
+                        <option value="60">60 minutes</option>
+                        <option value="90">90 minutes</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="session-notes">Session notes (optional)</label>
+                    <textarea id="session-notes"
+                        maxlength="300"
+                        placeholder="What would you like to cover?"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="session-secondary-button"
+                        id="cancel-modal">Go back</button>
+                    <button type="submit" class="session-primary-button">
+                        Create session
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="../js/nav.js"></script>
+
+    <script>
+        const sessionList = document.getElementById("session-list");
+        const sessionModal = document.getElementById("session-modal");
+        const sessionForm = document.getElementById("session-form");
+        const emptySessions = document.getElementById("empty-sessions");
+        const filterButtons = [
+            ...document.querySelectorAll(".filter-button")
+        ];
+
+        let currentFilter = "all";
+
+        const localToday = new Date();
+        const localDateString = [
+            localToday.getFullYear(),
+            String(localToday.getMonth() + 1).padStart(2, "0"),
+            String(localToday.getDate()).padStart(2, "0")
+        ].join("-");
+
+        document.getElementById("session-date-input").min =
+            localDateString;
+
+        function updateSessionCounts() {
+            const sessionCards = [
+                ...document.querySelectorAll(".session-card")
+            ];
+
+            const count = status => sessionCards.filter(
+                card => card.dataset.status === status
+            ).length;
+
+            document.getElementById("upcoming-count").textContent =
+                count("upcoming");
+
+            document.getElementById("completed-count").textContent =
+                count("completed");
+
+            document.getElementById("cancelled-count").textContent =
+                count("cancelled");
+        }
+
+        function filterSessions(filter) {
+            currentFilter = filter;
+
+            filterButtons.forEach(button => {
+                button.classList.toggle(
+                    "active",
+                    button.dataset.filter === filter
+                );
+            });
+
+            const sessionCards = [
+                ...document.querySelectorAll(".session-card")
+            ];
+
+            let visibleCount = 0;
+
+            sessionCards.forEach(card => {
+                const visible =
+                    filter === "all" || card.dataset.status === filter;
+
+                card.classList.toggle("hidden", !visible);
+
+                if (visible) visibleCount++;
+            });
+
+            sessionList.classList.toggle("hidden", visibleCount === 0);
+            emptySessions.classList.toggle("hidden", visibleCount !== 0);
+
+            const labels = {
+                all: "No sessions yet",
+                upcoming: "No upcoming sessions",
+                completed: "No completed sessions yet",
+                cancelled: "No cancelled sessions"
+            };
+
+            document.getElementById("empty-title").textContent =
+                labels[filter];
+
+            document.getElementById("empty-description").textContent =
+                filter === "upcoming"
+                    ? "Schedule a new session with one of your learning partners."
+                    : "Try another filter or schedule a new learning session.";
+
+            document.getElementById("empty-schedule").classList.toggle(
+                "hidden",
+                filter === "completed"
+            );
+        }
+
+        function openModal() {
+            sessionModal.classList.remove("hidden");
+            document.getElementById("session-title-input").focus();
+        }
+
+        function closeModal() {
+            sessionModal.classList.add("hidden");
+        }
+
+        document.getElementById("open-modal").addEventListener(
+            "click", openModal
+        );
+
+        document.getElementById("empty-schedule").addEventListener(
+            "click", openModal
+        );
+
+        document.getElementById("close-modal").addEventListener(
+            "click", closeModal
+        );
+
+        document.getElementById("cancel-modal").addEventListener(
+            "click", closeModal
+        );
+
+        sessionModal.addEventListener("click", event => {
+            if (event.target === sessionModal) closeModal();
+        });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") closeModal();
+        });
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                filterSessions(button.dataset.filter);
+            });
+        });
+
+        sessionList.addEventListener("click", event => {
+            const cancelButton = event.target.closest(".cancel-session");
+
+            if (!cancelButton) return;
+
+            const card = cancelButton.closest(".session-card");
+
+            if (!confirm("Cancel this learning session?")) return;
+
+            card.dataset.status = "cancelled";
+
+            const badge = card.querySelector(".session-badge");
+            badge.textContent = "Cancelled";
+            badge.className = "session-badge cancelled";
+
+            cancelButton.remove();
+
+            updateSessionCounts();
+            filterSessions(currentFilter);
+        });
+
+        sessionForm.addEventListener("submit", event => {
+            event.preventDefault();
+
+            const title = document.getElementById(
+                "session-title-input"
+            ).value.trim();
+
+            const partner = document.getElementById(
+                "session-partner"
+            ).value;
+
+            const dateValue = document.getElementById(
+                "session-date-input"
+            ).value;
+
+            const timeValue = document.getElementById(
+                "session-time-input"
+            ).value;
+
+            const duration = document.getElementById(
+                "session-duration"
+            ).value;
+
+            const notes = document.getElementById(
+                "session-notes"
+            ).value.trim();
+
+            if (!title || !partner || !dateValue || !timeValue) return;
+
+            if (dateValue < localDateString) {
+                alert("Please choose today or a future date.");
+                return;
+            }
+
+            const date = new Date(dateValue + "T12:00:00");
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = date.toLocaleDateString("en-IN", {
+                month: "short"
+            });
+
+            const formattedTime = new Date(
+                dateValue + "T" + timeValue
+            ).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            const card = document.createElement("article");
+            card.className = "session-card";
+            card.dataset.status = "upcoming";
+            card.dataset.day = day;
+            card.dataset.month = month;
+            card.dataset.date = dateValue;
+
+            const dateBox = document.createElement("div");
+            dateBox.className = "session-date";
+
+            const monthSpan = document.createElement("span");
+            monthSpan.className = "session-month";
+            monthSpan.textContent = month;
+
+            const daySpan = document.createElement("span");
+            daySpan.className = "session-day";
+            daySpan.textContent = day;
+
+            dateBox.append(monthSpan, daySpan);
+
+            const info = document.createElement("div");
+            info.className = "session-info";
+
+            const titleRow = document.createElement("div");
+            titleRow.className = "session-title-row";
+
+            const titleSpan = document.createElement("span");
+            titleSpan.className = "session-title";
+            titleSpan.textContent = title;
+
+            const badge = document.createElement("span");
+            badge.className = "session-badge upcoming";
+            badge.textContent = "Upcoming";
+
+            titleRow.append(titleSpan, badge);
+
+            const description = document.createElement("p");
+            description.className = "session-description";
+            description.textContent = notes || "Skill exchange session.";
+
+            const meta = document.createElement("div");
+            meta.className = "session-meta";
+
+            [
+                "With " + partner,
+                formattedTime,
+                duration + " minutes"
+            ].forEach(value => {
+                const span = document.createElement("span");
+                span.textContent = value;
+                meta.appendChild(span);
+            });
+
+            info.append(titleRow, description, meta);
+
+            const actions = document.createElement("div");
+            actions.className = "session-actions";
+
+            const cancelButton = document.createElement("button");
+            cancelButton.className = "session-secondary-button cancel-session";
+            cancelButton.textContent = "Cancel";
+
+            actions.appendChild(cancelButton);
+            card.append(dateBox, info, actions);
+            sessionList.prepend(card);
+
+            sessionForm.reset();
+            document.getElementById("session-date-input").min =
+                localDateString;
+
+            closeModal();
+            updateSessionCounts();
+            filterSessions("upcoming");
+        });
+
+        updateSessionCounts();
+        filterSessions("all");
+    </script>
+</body>
+</html>

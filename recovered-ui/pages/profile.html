@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | SkillBarter</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .profile-page {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 24px 50px;
+            color: #26352B;
+        }
+
+        .profile-heading {
+            margin-bottom: 28px;
+        }
+
+        .profile-heading h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            margin-bottom: 8px;
+        }
+
+        .profile-heading p {
+            color: #69766B;
+            margin: 0;
+        }
+
+        .profile-card,
+        .skills-card {
+            background: #fffefa;
+            border: 1px solid #D9E1D6;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 22px;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: #E8EEE5;
+            color: #355640;
+            display: grid;
+            place-items: center;
+            font-size: 30px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .profile-info h2 {
+            margin: 0 0 8px;
+            font-size: 25px;
+        }
+
+        .profile-info p {
+            color: #69766B;
+            margin: 0 0 10px;
+            line-height: 1.6;
+        }
+
+        .verified-label {
+            display: inline-block;
+            background: #E8EEE5;
+            color: #355640;
+            padding: 6px 11px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-button {
+            background: #355640;
+            color: white;
+            border: none;
+            padding: 12px 19px;
+            border-radius: 10px;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+        }
+
+        .profile-button:hover {
+            background: #263F2F;
+        }
+
+        .skills-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .skills-header h2 {
+            font-size: 21px;
+            margin: 0;
+        }
+
+        .skill-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            padding: 18px;
+            border: 1px solid #D9E1D6;
+            border-radius: 14px;
+            background: #F8F8F2;
+        }
+
+        .skill-item h3 {
+            font-size: 16px;
+            margin: 0 0 9px;
+        }
+
+        .skill-item p {
+            color: #69766B;
+            font-size: 14px;
+            margin: 0 0 12px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 7px;
+            background: #E8EEE5;
+            color: #355640;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty-proof {
+            color: #69766B;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .profile-page {
+                margin-top: 25px;
+                padding: 0 15px 35px;
+            }
+
+            .profile-card,
+            .skills-card {
+                padding: 20px;
+            }
+
+            .skill-list {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-container"></div>
+
+    <main class="profile-page">
+        <header class="profile-heading">
+            <h1>My Profile</h1>
+            <p>Your skills, your journey, your next learning partner.</p>
+        </header>
+
+        <section class="profile-card">
+            <div class="profile-top">
+                <div class="avatar" id="profile-avatar">S</div>
+
+                <div class="profile-info">
+                    <h2 id="profile-name">Sakshi Sharma</h2>
+                    <p id="profile-bio">
+                        Computer Science student passionate about web development
+                        and learning new technologies.
+                    </p>
+                    <span class="verified-label">✓ Profile created</span>
+                </div>
+
+                <button class="profile-button" id="edit-profile-btn">
+                    Edit Profile
+                </button>
+            </div>
+        </section>
+
+        <section class="skills-card">
+            <div class="skills-header">
+                <h2>Skills I Can Teach</h2>
+                <span class="skill-tag">Share your expertise</span>
+            </div>
+
+            <div class="skill-list">
+                <article class="skill-item">
+                    <h3>HTML & CSS</h3>
+                    <p>Building responsive and accessible web pages.</p>
+                    <span class="skill-tag">Intermediate</span>
+                    <div class="empty-proof">Proof: Add a project or certificate</div>
+                </article>
+
+                <article class="skill-item">
+                    <h3>JavaScript</h3>
+                    <p>Learning to create interactive web experiences.</p>
+                    <span class="skill-tag">Beginner</span>
+                    <div class="empty-proof">Proof: Add a project or certificate</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="skills-card">
+            <div class="skills-header">
+                <h2>Skills I Want to Learn</h2>
+                <span class="skill-tag">My learning goals</span>
+            </div>
+
+            <div class="skill-list">
+                <article class="skill-item">
+                    <h3>React.js</h3>
+                    <p>Building reusable components and modern interfaces.</p>
+                    <span class="skill-tag">Learning goal</span>
+                </article>
+
+                <article class="skill-item">
+                    <h3>UI/UX Design</h3>
+                    <p>Creating thoughtful, user-friendly experiences.</p>
+                    <span class="skill-tag">Learning goal</span>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/nav.js"></script>
+
+    <script>
+        const editButton = document.getElementById("edit-profile-btn");
+
+        editButton.addEventListener("click", function () {
+            const currentName =
+                document.getElementById("profile-name").textContent;
+            const currentBio =
+                document.getElementById("profile-bio").textContent.trim();
+
+            const newName = prompt("Enter your name:", currentName);
+
+            if (newName === null || !newName.trim()) return;
+
+            const newBio = prompt("Write a short bio:", currentBio);
+
+            if (newBio === null || !newBio.trim()) return;
+
+            document.getElementById("profile-name").textContent =
+                newName.trim();
+            document.getElementById("profile-bio").textContent =
+                newBio.trim();
+            document.getElementById("profile-avatar").textContent =
+                newName.trim().charAt(0).toUpperCase();
+        });
+    </script>
+</body>
+</html>
