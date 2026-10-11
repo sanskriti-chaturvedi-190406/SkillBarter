@@ -49,6 +49,8 @@ a {
   text-decoration: none;
 }
 
+/* Navigation */
+
 .navbar {
   min-height: 70px;
   padding: 16px 6%;
@@ -108,6 +110,8 @@ a {
   border-radius: 5px;
 }
 
+/* Page layout */
+
 .container {
   width: 90%;
   max-width: 1100px;
@@ -148,6 +152,8 @@ a {
   line-height: 1.6;
 }
 
+/* Statistics */
+
 .stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -168,15 +174,17 @@ a {
   gap: 8px;
 }
 
-.stats small {
+.stat-card small {
   color: var(--muted);
   font-size: 12px;
 }
 
-.stats strong {
+.stat-card strong {
   color: var(--green-dark);
   font-size: 28px;
 }
+
+/* Panels */
 
 .panel {
   padding: 25px;
@@ -204,6 +212,8 @@ a {
   margin: 0;
   font-size: 14px;
 }
+
+/* Forms */
 
 form,
 #dynamicProofFields {
@@ -306,6 +316,8 @@ legend {
   font-size: 12px;
 }
 
+/* Buttons */
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -358,6 +370,8 @@ legend {
 .message.success {
   color: var(--green-dark);
 }
+
+/* Skill cards */
 
 .cards {
   display: grid;
@@ -443,6 +457,7 @@ legend {
   border: 1px solid #d6d9d0;
   border-radius: 4px;
   font-size: 12px;
+  cursor: pointer;
 }
 
 .small-btn:hover {
@@ -469,6 +484,8 @@ legend {
   border-radius: 5px;
   font-size: 14px;
 }
+
+/* Proof modal */
 
 .overlay {
   position: fixed;
@@ -534,6 +551,93 @@ legend {
   line-height: 1.6;
 }
 
+/* Multiple learning outcomes */
+
+#learningOutcomeBox {
+  gap: 12px;
+}
+
+#outcomesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.outcome-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.outcome-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  line-height: 1.5;
+}
+
+.outcome-remove {
+  flex-shrink: 0;
+  min-height: 46px;
+  padding: 10px 14px;
+  background: white;
+  color: #a83d3d;
+  border: 1px solid #d9aaaa;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.outcome-remove:hover {
+  background: #fff2f0;
+}
+
+.add-outcome-btn {
+  align-self: flex-start;
+  font-size: 13px;
+}
+
+.learning-outcome {
+  margin: 15px 0;
+  padding: 14px;
+  background: var(--light-green);
+  border-left: 3px solid var(--green);
+  border-radius: 5px;
+}
+
+.learning-outcome strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--green-dark);
+  font-size: 13px;
+}
+
+.learning-outcome p {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.learning-outcome ol {
+  margin: 8px 0 0;
+  padding-left: 22px;
+}
+
+.learning-outcome li {
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.learning-outcome li:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+
 .footer {
   display: flex;
   align-items: center;
@@ -552,6 +656,8 @@ legend {
   color: var(--muted);
   font-size: 13px;
 }
+
+/* Responsive design */
 
 @media (max-width: 1000px) {
   .navbar {
@@ -608,5 +714,23 @@ legend {
 
   .nav-links a {
     font-size: 13px;
+  }
+
+  .outcome-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .outcome-input {
+    width: 100%;
+  }
+
+  .outcome-remove {
+    align-self: flex-end;
+    min-height: 40px;
+  }
+
+  .add-outcome-btn {
+    width: 100%;
   }
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,9 @@
     <nav class="nav-links" aria-label="Main navigation">
       <a href="./index.html">Home</a>
       <a href="./discover.html">Discover</a>
-      <a href="./skills.html" class="active" aria-current="page">My Skills</a>
+      <a href="./skills.html" class="active" aria-current="page">
+        My Skills
+      </a>
     </nav>
 
     <div class="nav-actions">
@@ -39,12 +42,14 @@
           <strong id="teachCount">0</strong>
         </div>
       </article>
+
       <article class="stat-card">
         <div>
           <small>LEARNING SKILLS</small>
           <strong id="learnCount">0</strong>
         </div>
       </article>
+
       <article class="stat-card">
         <div>
           <small>PENDING REVIEW</small>
@@ -53,11 +58,50 @@
       </article>
     </section>
 
+    <section class="panel">
+      <div class="section-heading">
+        <p class="section-label">SKILL EXCHANGE REWARDS</p>
+        <h2>Learn. Teach. Earn.</h2>
+        <p class="muted">
+          Earn credits by teaching and use credits to learn.
+        </p>
+      </div>
+
+      <div class="two">
+        <article class="stat-card">
+          <div>
+            <small>PROPOSED TEACHING REWARD</small>
+            <strong>+10</strong>
+            <p class="muted">
+              Credits per completed teaching hour
+            </p>
+          </div>
+        </article>
+
+        <article class="stat-card">
+          <div>
+            <small>PROPOSED LEARNING COST</small>
+            <strong>10</strong>
+            <p class="muted">
+              Credits per completed learning hour
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <p class="hint" style="margin-top: 15px;">
+        Demo information only. Credit rates are not finalized.
+        Real credit transactions require backend integration.
+      </p>
+    </section>
+
     <section class="panel" id="skillEditor">
       <div class="section-heading">
         <p class="section-label">MANAGE YOUR SKILLS</p>
         <h2 id="formTitle">Equip a New Skill</h2>
-        <p class="muted">Choose a predefined skill or create your own.</p>
+        <p class="muted">
+          Choose a predefined skill or create your own.
+        </p>
       </div>
 
       <form id="skillForm">
@@ -79,15 +123,25 @@
 
         <div class="field" id="customSkillBox" hidden>
           <label for="customSkill">Custom Skill Name *</label>
-          <input id="customSkill" type="text" maxlength="60"
-                 placeholder="e.g. Pixel Art">
+          <input
+            id="customSkill"
+            type="text"
+            maxlength="60"
+            placeholder="e.g. Pixel Art"
+          >
         </div>
 
         <fieldset>
           <legend>Your Goal *</legend>
+
           <div class="two">
             <label class="choice">
-              <input type="radio" name="skillType" value="teach" required>
+              <input
+                type="radio"
+                name="skillType"
+                value="teach"
+                required
+              >
               <span>
                 <b>I Can Teach</b>
                 <small>Submit proof to get verified</small>
@@ -95,7 +149,12 @@
             </label>
 
             <label class="choice">
-              <input type="radio" name="skillType" value="learn" required>
+              <input
+                type="radio"
+                name="skillType"
+                value="learn"
+                required
+              >
               <span>
                 <b>I Want to Learn</b>
                 <small>Add directly to your inventory</small>
@@ -114,17 +173,63 @@
           </select>
         </div>
 
+        <!-- MULTIPLE LEARNING OUTCOMES -->
+        <div class="field" id="learningOutcomeBox" hidden>
+          <label id="learningOutcomesLabel">
+            Expected Learning Outcomes *
+          </label>
+
+          <p class="muted">
+            What will students be able to do after learning
+            this skill? You can add multiple outcomes.
+          </p>
+
+          <div
+            id="outcomesContainer"
+            role="group"
+            aria-labelledby="learningOutcomesLabel"
+          ></div>
+
+          <button
+            type="button"
+            id="addOutcomeButton"
+            class="btn secondary add-outcome-btn"
+          >
+            + ADD ANOTHER OUTCOME
+          </button>
+
+          <p class="hint">
+            At least one learning outcome is required.
+            Each outcome must contain at least 20 characters.
+            Maximum 200 characters per outcome.
+          </p>
+        </div>
+
         <div class="actions">
-          <button class="btn primary" id="saveButton" type="submit">
+          <button
+            class="btn primary"
+            id="saveButton"
+            type="submit"
+          >
             CONTINUE
           </button>
-          <button class="btn secondary" id="cancelButton"
-                  type="button" hidden>
+
+          <button
+            class="btn secondary"
+            id="cancelButton"
+            type="button"
+            hidden
+          >
             CANCEL EDIT
           </button>
         </div>
 
-        <p class="message" id="formMessage" role="status"></p>
+        <p
+          class="message"
+          id="formMessage"
+          role="status"
+          aria-live="polite"
+        ></p>
       </form>
     </section>
 
@@ -133,9 +238,11 @@
         <p class="section-label">PROOF VERIFICATION</p>
         <h2>Verification Queue</h2>
         <p class="muted">
-          Track teaching skills awaiting approval or requiring new evidence.
+          Track teaching skills awaiting approval
+          or requiring new evidence.
         </p>
       </div>
+
       <div class="cards" id="verificationList"></div>
     </section>
 
@@ -143,28 +250,48 @@
       <div class="section-heading">
         <p class="section-label">YOUR COLLECTION</p>
         <h2>My Skill Inventory</h2>
-        <p class="muted">Your verified teaching skills and learning goals.</p>
+        <p class="muted">
+          Your verified teaching skills and learning goals.
+          Proposed plans: two active learning goals for free users,
+          unlimited for premium users. Plan limits are not
+          enforced in this demo.
+        </p>
       </div>
 
-      <h3 class="inventory-title">Verified Teaching Skills</h3>
+      <h3 class="inventory-title">
+        Verified Teaching Skills
+      </h3>
       <div class="cards" id="teachingList"></div>
 
-      <h3 class="inventory-title">Skills I Want to Learn</h3>
+      <h3 class="inventory-title">
+        Skills I Want to Learn
+      </h3>
       <div class="cards" id="learningList"></div>
     </section>
   </main>
 
   <div class="overlay" id="proofModal" hidden>
-    <section class="modal" role="dialog" aria-modal="true"
-             aria-labelledby="proofHeading">
+    <section
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="proofHeading"
+    >
       <div class="modal-heading">
         <div>
           <p class="section-label">SKILL VERIFICATION</p>
           <h2 id="proofHeading">Submit Teaching Proof</h2>
           <p class="muted" id="proofSkillLabel"></p>
         </div>
-        <button class="close" id="closeProofButton" type="button"
-                aria-label="Close proof form">&times;</button>
+
+        <button
+          class="close"
+          id="closeProofButton"
+          type="button"
+          aria-label="Close proof form"
+        >
+          &times;
+        </button>
       </div>
 
       <form id="proofForm">
@@ -181,30 +308,45 @@
         </div>
 
         <div id="dynamicProofFields"></div>
+
         <p class="hint" id="proofHint">
           Choose a proof type to see the relevant fields.
         </p>
+
         <p class="hint">
-          Demo limitation: files are not uploaded or available to admins.
-          Only file information is saved. A public evidence URL is required
-          when submitting a file.
+          Demo limitation: files are not uploaded or available
+          to admins. Only file information is saved.
+          A public evidence URL is required.
         </p>
 
         <div class="actions">
           <button class="btn primary" type="submit">
             SUBMIT FOR REVIEW
           </button>
-          <button class="btn secondary" id="cancelProofButton"
-                  type="button">CANCEL</button>
+
+          <button
+            class="btn secondary"
+            id="cancelProofButton"
+            type="button"
+          >
+            CANCEL
+          </button>
         </div>
 
-        <p class="message" id="proofMessage" role="status"></p>
+        <p
+          class="message"
+          id="proofMessage"
+          role="status"
+          aria-live="polite"
+        ></p>
       </form>
     </section>
   </div>
 
   <footer class="footer">
-    <a href="./index.html" class="logo">Skill<span>Barter.</span></a>
+    <a href="./index.html" class="logo">
+      Skill<span>Barter.</span>
+    </a>
     <p>Learn together. Grow together.</p>
   </footer>
 </body>
