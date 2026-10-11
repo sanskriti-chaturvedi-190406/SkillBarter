@@ -3,18 +3,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillBarter | Admin Verification</title>
+
   <link rel="stylesheet" href="./admin.css">
   <script src="./admin.js" defer></script>
 </head>
 <body>
+
   <header class="navbar">
-    <a href="./index.html" class="logo">
+    <a href="../index.html" class="logo">
       Skill<span>Barter.</span>
     </a>
 
-    <nav class="nav-links" aria-label="Admin navigation">
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="../index.html">Home</a>
+      <a href="../recovered-ui/pages/dashboard.html">Dashboard</a>
+      <a href="../recovered-ui/pages/discover.html">Discover</a>
+      <a href="../recovered-ui/pages/connections.html">Connections</a>
+      <a href="../recovered-ui/pages/sessions.html">Sessions</a>
       <a href="./skills.html">My Skills</a>
       <a href="./admin.html" class="active" aria-current="page">
         Admin Panel
@@ -23,15 +30,17 @@
   </header>
 
   <main class="container">
+
     <section class="page-header">
       <p class="eyebrow">ADMIN VERIFICATION</p>
       <h1>Skill Verification Dashboard</h1>
       <p>
-        Review submitted teaching evidence, expected learning outcomes,
-        and manage verification requests.
+        Review teaching evidence, learning outcomes,
+        and verification requests.
       </p>
       <p class="demo-notice">
-        Demo mode: this page is not role-protected.
+        Demo mode: Reviews are stored in this browser only.
+        This page is not role-protected.
       </p>
     </section>
 
@@ -42,12 +51,12 @@
       </article>
 
       <article class="stat-card">
-        <span>Approved Skills</span>
+        <span>Approved Proofs</span>
         <strong id="approvedCount">0</strong>
       </article>
 
       <article class="stat-card">
-        <span>Rejected Skills</span>
+        <span>Rejected Proofs</span>
         <strong id="rejectedCount">0</strong>
       </article>
     </section>
@@ -58,12 +67,23 @@
           <p class="section-label">AWAITING DECISION</p>
           <h2>Pending Verification Requests</h2>
         </div>
-        <button id="refreshButton" class="btn secondary" type="button">
+
+        <button
+          id="refreshButton"
+          class="btn secondary"
+          type="button"
+        >
           Refresh
         </button>
       </div>
 
-      <p id="adminMessage" class="message" role="status"></p>
+      <p
+        id="adminMessage"
+        class="message"
+        role="status"
+        aria-live="polite"
+      ></p>
+
       <div id="pendingList" class="request-list"></div>
     </section>
 
@@ -77,13 +97,15 @@
 
       <div id="historyList" class="request-list"></div>
     </section>
+
   </main>
 
   <footer class="footer">
-    <a href="./index.html" class="logo">
+    <a href="../index.html" class="logo">
       Skill<span>Barter.</span>
     </a>
     <p>Team Aurora · Admin Verification</p>
   </footer>
+
 </body>
 </html>

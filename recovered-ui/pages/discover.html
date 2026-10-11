@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,178 +7,297 @@
     <title>Discover | SkillBarter</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <div id="navbar-container"></div>
-    
-<main class="discover-page">
-    <section class="discover-header">
-        <div>
-            <p class="section-label">FIND YOUR PEOPLE</p>
-            <h1>Discover your next skill partner.</h1>
-            <p class="discover-description">
-                Share what you know. Learn something new.
-                Grow together.
-            </p>
-        </div>
-    </section>
 
-    <section class="discover-controls">
-        <input
-            type="search"
-            id="search-input"
-            placeholder="Search people or skills..."
-        >
+    <main class="discover-page">
 
-        
-            <select id="skill-filter">
-            <option value="all">All skill partners</option>
-            <option value="teach">People who can teach me Python</option>
-            <option value="learn">People who want to learn JavaScript</option>
+        <section class="discover-header">
+            <div>
+                <p class="section-label">FIND YOUR PEOPLE</p>
+
+                <h1>Discover your next skill partner.</h1>
+
+                <p class="discover-description">
+                    Share what you know. Learn something new.
+                    Grow together.
+                </p>
+
+                <div class="discover-actions">
+                    <a href="../../verification/skills.html"
+                       class="btn-primary">
+                        Manage My Skills
+                    </a>
+
+                    <a href="./connections.html"
+                       class="btn-primary">
+                        My Connections
+                    </a>
+
+                    <a href="../index.html"
+                       class="btn-primary">
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH AND FILTERS -->
+        <section class="discover-controls">
+
+            <input
+                type="search"
+                id="search-input"
+                placeholder="Search people or skills..."
+                aria-label="Search people or skills"
+            >
+
+            <select id="skill-filter"
+                    aria-label="Filter skill partners">
+                <option value="all">
+                    All skill partners
+                </option>
+                <option value="teach">
+                    People who can teach me Python
+                </option>
+                <option value="learn">
+                    People who want to learn JavaScript
+                </option>
             </select>
 
+            <label class="verified-filter">
+                <input type="checkbox" id="verified-only">
+                Verified skills only
+            </label>
 
-        <label class="verified-filter">
-            <input type="checkbox" id="verified-only">
-            Verified skills only
-        </label>
-    </section>
+        </section>
 
-    <section class="discover-results">
-        <div class="results-heading">
-            <h2>People worth learning with</h2>
-            <p id="results-count" aria-live="polite">3 skill partners</p>
-        </div>
+        <!-- DISCOVER RESULTS -->
+        <section class="discover-results">
 
-        
-<div class="discover-grid" id="discover-grid">
-    <article class="partner-card"
-        data-name="Aarav Sharma"
-        data-teaches="JavaScript UI Design"
-        data-learns="Python"
-        data-verified="true">
+            <div class="results-heading">
+                <h2>People worth learning with</h2>
 
-        <div class="partner-top">
-            <div class="partner-avatar avatar-sage">AS</div>
-            <span class="match-label">Skill partner</span>
-        </div>
-
-        <h3>Aarav Sharma</h3>
-        <p class="partner-bio">
-            Frontend enthusiast who loves building clean,
-            interactive web experiences.
-        </p>
-
-        <div class="partner-skills">
-            <div class="skill-group">
-                <span class="skill-label">CAN TEACH</span>
-                <div class="skill-tags">
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag verified-tag">UI Design ✓</span>
-                </div>
+                <p id="results-count" aria-live="polite">
+                    3 skill partners
+                </p>
             </div>
 
-            <div class="skill-group">
-                <span class="skill-label">WANTS TO LEARN</span>
-                <div class="skill-tags">
-                    <span class="skill-tag">Python</span>
-                </div>
+            <div class="discover-grid" id="discover-grid">
+
+                <!-- PARTNER 1 -->
+                <article
+                    class="partner-card"
+                    data-name="Aarav Sharma"
+                    data-teaches="JavaScript UI Design"
+                    data-learns="Python"
+                    data-verified="true"
+                >
+                    <div class="partner-top">
+                        <div class="partner-avatar avatar-sage">
+                            AS
+                        </div>
+                        <span class="match-label">
+                            Skill partner
+                        </span>
+                    </div>
+
+                    <h3>Aarav Sharma</h3>
+
+                    <p class="partner-bio">
+                        Frontend enthusiast who loves building clean,
+                        interactive web experiences.
+                    </p>
+
+                    <div class="partner-skills">
+
+                        <div class="skill-group">
+                            <span class="skill-label">
+                                CAN TEACH
+                            </span>
+
+                            <div class="skill-tags">
+                                <span class="skill-tag">
+                                    JavaScript
+                                </span>
+                                <span class="skill-tag verified-tag">
+                                    UI Design ✓
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <span class="skill-label">
+                                WANTS TO LEARN
+                            </span>
+
+                            <div class="skill-tags">
+                                <span class="skill-tag">
+                                    Python
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="partner-footer">
+                        <span class="proficiency">
+                            Intermediate
+                        </span>
+
+                        <button class="connect-btn" type="button">
+                            Connect ↗
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PARTNER 2 -->
+                <article
+                    class="partner-card"
+                    data-name="Meera Kapoor"
+                    data-teaches="Python Data Analysis"
+                    data-learns="UI Design"
+                    data-verified="true"
+                >
+                    <div class="partner-top">
+                        <div class="partner-avatar avatar-peach">
+                            MK
+                        </div>
+                        <span class="match-label">
+                            Skill partner
+                        </span>
+                    </div>
+
+                    <h3>Meera Kapoor</h3>
+
+                    <p class="partner-bio">
+                        Python learner and aspiring data enthusiast
+                        who enjoys solving practical problems.
+                    </p>
+
+                    <div class="partner-skills">
+
+                        <div class="skill-group">
+                            <span class="skill-label">
+                                CAN TEACH
+                            </span>
+
+                            <div class="skill-tags">
+                                <span class="skill-tag verified-tag">
+                                    Python ✓
+                                </span>
+                                <span class="skill-tag">
+                                    Data Analysis
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <span class="skill-label">
+                                WANTS TO LEARN
+                            </span>
+
+                            <div class="skill-tags">
+                                <span class="skill-tag">
+                                    UI Design
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="partner-footer">
+                        <span class="proficiency">
+                            Beginner
+                        </span>
+
+                        <button class="connect-btn" type="button">
+                            Connect ↗
+                        </button>
+                    </div>
+                </article>
+
+                <!-- PARTNER 3 -->
+                <article
+                    class="partner-card"
+                    data-name="Rohan Verma"
+                    data-teaches="UI Design Figma"
+                    data-learns="JavaScript"
+                    data-verified="false"
+                >
+                    <div class="partner-top">
+                        <div class="partner-avatar avatar-blue">
+                            RV
+                        </div>
+                        <span class="match-label">
+                            Skill partner
+                        </span>
+                    </div>
+
+                    <h3>Rohan Verma</h3>
+
+                    <p class="partner-bio">
+                        Exploring product design and creating
+                        intuitive interfaces with Figma.
+                    </p>
+
+                    <div class="partner-skills">
+
+                        <div class="skill-group">
+                            <span class="skill-label">
+                                CAN TEACH
+                            </span>
+
+                            <div class="skill-tags">
+                                <span class="skill-tag">
+                                    UI Design
+                                </span>
+                                <span class="skill-tag">
+                                    Figma
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <span class="skill-label">
+                                WANTS TO LEARN
+                            </span>
+
+                            <div class="skill-tags">
+                                <span class="skill-tag">
+                                    JavaScript
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="partner-footer">
+                        <span class="proficiency">
+                            Intermediate
+                        </span>
+
+                        <button class="connect-btn" type="button">
+                            Connect ↗
+                        </button>
+                    </div>
+                </article>
+
             </div>
-        </div>
 
-        <div class="partner-footer">
-            <span class="proficiency">Intermediate</span>
-            <button class="connect-btn" type="button">Connect ↗</button>
-        </div>
-    </article>
-    <!-- Partner 2 -->
-    <article class="partner-card"
-        data-name="Meera Kapoor"
-        data-teaches="Python Data Analysis"
-        data-learns="UI Design"
-        data-verified="true">
+            <p id="empty-message"
+               class="empty-message"
+               hidden>
+                No matching skill partners found.
+                Try changing your search or filters.
+            </p>
 
-        <div class="partner-top">
-            <div class="partner-avatar avatar-peach">MK</div>
-            <span class="match-label">Skill partner</span>
-        </div>
-
-        <h3>Meera Kapoor</h3>
-        <p class="partner-bio">
-            Python learner and aspiring data enthusiast
-            who enjoys solving practical problems.
-        </p>
-
-        <div class="partner-skills">
-            <div class="skill-group">
-                <span class="skill-label">CAN TEACH</span>
-                <div class="skill-tags">
-                    <span class="skill-tag verified-tag">Python ✓</span>
-                    <span class="skill-tag">Data Analysis</span>
-                </div>
-            </div>
-
-            <div class="skill-group">
-                <span class="skill-label">WANTS TO LEARN</span>
-                <div class="skill-tags">
-                    <span class="skill-tag">UI Design</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="partner-footer">
-            <span class="proficiency">Beginner</span>
-            <button class="connect-btn" type="button">Connect ↗</button>
-        </div>
-    </article>
-    <!-- Partner 3 -->
-    <article class="partner-card"
-        data-name="Rohan Verma"
-        data-teaches="UI Design Figma"
-        data-learns="JavaScript"
-        data-verified="false">
-
-        <div class="partner-top">
-            <div class="partner-avatar avatar-blue">RV</div>
-            <span class="match-label">Skill partner</span>
-        </div>
-
-        <h3>Rohan Verma</h3>
-        <p class="partner-bio">
-            Exploring product design and creating
-            intuitive interfaces with Figma.
-        </p>
-
-        <div class="partner-skills">
-            <div class="skill-group">
-                <span class="skill-label">CAN TEACH</span>
-                <div class="skill-tags">
-                    <span class="skill-tag">UI Design</span>
-                    <span class="skill-tag">Figma</span>
-                </div>
-            </div>
-
-            <div class="skill-group">
-                <span class="skill-label">WANTS TO LEARN</span>
-                <div class="skill-tags">
-                    <span class="skill-tag">JavaScript</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="partner-footer">
-            <span class="proficiency">Intermediate</span>
-            <button class="connect-btn" type="button">Connect ↗</button>
-        </div>
-    </article>
-
-</div>
-<p id="empty-message" class="empty-message" hidden>
-    No matching skill partners found. Try changing your search or filters.
-</p>
-    </section>
-</main>
+        </section>
+    </main>
 
     <script src="../js/nav.js"></script>
+
     <script src="../js/discover.js"></script>
 </body>
 </html>
