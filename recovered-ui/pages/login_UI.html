@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | SkillBarter</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        :root {
+            --green: #355640;
+            --green-light: #E8EEE5;
+            --cream: #F4F3EE;
+            --text: #26362B;
+            --muted: #788078;
+            --border: #DFE5DC;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--cream);
+            color: var(--text);
+            font-family: "Manrope", Arial, sans-serif;
+        }
+
+        .login-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 55px;
+            align-items: center;
+            width: min(1080px, 100%);
+            min-height: calc(100vh - 75px);
+            margin: auto;
+            padding: 45px 28px;
+        }
+
+        /* Left introduction */
+
+        .login-intro {
+            max-width: 460px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .login-intro h1 {
+            margin: 0;
+            color: var(--green);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: clamp(42px, 5vw, 64px);
+            font-weight: 400;
+            line-height: 1.12;
+        }
+
+        .login-intro h1 span {
+            color: #82977E;
+            font-style: italic;
+        }
+
+        .intro-description {
+            max-width: 390px;
+            margin: 22px 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .intro-divider {
+            width: 65px;
+            height: 3px;
+            margin: 30px 0;
+            border-radius: 5px;
+            background: var(--green);
+        }
+
+        .benefit-list {
+            display: grid;
+            gap: 17px;
+        }
+
+        .benefit {
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 16px;
+        }
+
+        .benefit h3 {
+            margin: 2px 0 5px;
+            font-size: 13px;
+        }
+
+        .benefit p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* Login card */
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            justify-self: end;
+            padding: clamp(25px, 4vw, 40px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--white);
+            box-shadow: 0 15px 45px rgba(53, 86, 64, 0.06);
+        }
+
+        .card-mark {
+            display: grid;
+            width: 46px;
+            height: 46px;
+            margin-bottom: 24px;
+            place-items: center;
+            border-radius: 13px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 22px;
+        }
+
+        .login-card h2 {
+            margin: 0 0 9px;
+            color: var(--green);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: 32px;
+            font-weight: 400;
+        }
+
+        .card-description {
+            margin: 0 0 28px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            min-width: 0;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+            background: #FDFDFC;
+            color: var(--text);
+            font: inherit;
+            font-size: 12px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(53, 86, 64, .10);
+        }
+
+        .form-group input::placeholder {
+            color: #A0A69D;
+        }
+
+        .password-input {
+            padding-right: 65px !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 13px;
+            transform: translateY(-50%);
+            padding: 5px 0;
+            border: none;
+            background: transparent;
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 2px 0 24px;
+        }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .remember-label input {
+            accent-color: var(--green);
+        }
+
+        .text-link {
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .text-link:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            min-height: 47px;
+            padding: 13px 18px;
+            border: 1px solid var(--green);
+            border-radius: 9px;
+            background: var(--green);
+            color: white;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-1px);
+            background: #496D51;
+        }
+
+        .login-button:disabled {
+            cursor: wait;
+            opacity: .7;
+        }
+
+        .form-message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .signup-prompt {
+            margin: 23px 0 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .card-footer {
+            margin-top: 25px;
+            padding-top: 19px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 10px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 760px) {
+            .login-page {
+                grid-template-columns: 1fr;
+                gap: 35px;
+                padding: 35px 18px 50px;
+            }
+
+            .login-intro {
+                max-width: 550px;
+            }
+
+            .login-intro h1 {
+                font-size: 43px;
+            }
+
+            .intro-description {
+                margin: 15px 0;
+            }
+
+            .intro-divider {
+                margin: 22px 0;
+            }
+
+            .benefit-list {
+                gap: 13px;
+            }
+
+            .login-card {
+                max-width: 550px;
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .form-options {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="navbar-container"></div>
+
+    <main class="login-page">
+
+        <!-- Left side: SkillBarter introduction -->
+        <section class="login-intro">
+
+            <span class="eyebrow">A community built on exchange</span>
+
+            <h1>
+                Your next skill<br>
+                starts with a <span>connection.</span>
+            </h1>
+
+            <p class="intro-description">
+                Welcome back to SkillBarter, where knowledge is exchanged,
+                skills find their people, and learning becomes a two-way
+                journey.
+            </p>
+
+            <div class="intro-divider"></div>
+
+            <div class="benefit-list">
+
+                <div class="benefit">
+                    <div class="benefit-icon">↔</div>
+                    <div>
+                        <h3>Learn and teach</h3>
+                        <p>
+                            Exchange what you know for something
+                            new you want to learn.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h3>Build credibility</h3>
+                        <p>
+                            Showcase your skills and supporting
+                            evidence to build trust.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">✳</div>
+                    <div>
+                        <h3>Grow together</h3>
+                        <p>
+                            Connect with people whose knowledge
+                            complements your own.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Right side: Login form -->
+        <section class="login-card">
+
+            <div class="card-mark">↗</div>
+
+            <h2>Welcome back.</h2>
+
+            <p class="card-description">
+                Sign in to continue your learning journey.
+            </p>
+
+            <form id="login-form">
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <div class="input-wrap">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="password-input"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="toggle-password"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-label">
+                        <input type="checkbox" name="remember">
+                        Remember me
+                    </label>
+
+                    <a href="#" class="text-link" id="forgot-password">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Sign in to SkillBarter →
+                </button>
+
+                <div
+                    class="form-message"
+                    id="form-message"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+            </form>
+
+            <p class="signup-prompt">
+                New to SkillBarter?
+                <a href="./register.html" class="text-link">
+                    Create an account
+                </a>
+            </p>
+
+            <div class="card-footer">
+                Learn something new. Share something valuable.<br>
+                That's the SkillBarter way.
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="../js/app.js"></script>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("toggle-password");
+        const loginForm = document.getElementById("login-form");
+        const formMessage = document.getElementById("form-message");
+
+        togglePassword.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+            togglePassword.textContent = isPassword ? "Hide" : "Show";
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isPassword ? "Hide password" : "Show password"
+            );
+        });
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            formMessage.style.display = "block";
+            formMessage.textContent =
+                "The login interface is ready. Connect your authentication " +
+                "backend to sign in securely.";
+        });
+
+        document.getElementById("forgot-password")
+            .addEventListener("click", function (event) {
+                event.preventDefault();
+
+                formMessage.style.display = "block";
+                formMessage.textContent =
+                    "Password recovery will be available once the " +
+                    "authentication backend is connected.";
+            });
+    </script>
+
+</body>

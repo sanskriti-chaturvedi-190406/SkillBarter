@@ -1,13 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>skillbarter</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SkillBarter | Exchange Skills, Grow Together</title>
+    <link rel="stylesheet" href="./recovered-ui/css/style.css">
+
+</head>
+
+<body>
+
+    <header class="navbar landing-navbar">
+
+        <a href="./index.html" class="logo">
+            SkillBarter<span>.</span>
+        </a>
+
+        <div class="nav-actions">
+            <a href="./recovered-ui/pages/login_UI.html"
+               class="login-link"
+               id="loginLink">
+                Log in
+            </a>
+
+            <a href="./recovered-ui/pages/login_UI.html"
+               class="btn-primary"
+               id="getStartedLink">
+                Get Started
+            </a>
+        </div>
+
+    </header>
+    <main class="hero landing-hero">
+
+        <p class="eyebrow">
+            LEARN TOGETHER. GROW TOGETHER.
+        </p>
+
+        <h1>
+            Your skills have value.<br>
+            <span>Exchange them.</span>
+        </h1>
+
+        <p class="hero-description">
+            Teach what you know. Learn what you love.
+            Connect with people who can help you grow,
+            without the cost of traditional courses.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="./recovered-ui/pages/login_UI.html"
+               class="btn-primary"
+               data-auth-redirect>
+                Start exchanging skills →
+            </a>
+
+            <a href="./recovered-ui/pages/login_UI.html"
+               class="btn-secondary"
+               data-auth-redirect>
+                Explore skills
+            </a>
+
+        </div>
+
+    </main>
+
+    
+    <footer class="home-footer">
+        <p>
+            © SkillBarter. Learn together, grow together.
+        </p>
+    </footer>
+
+</body>
 </html>
