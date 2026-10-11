@@ -1,22 +1,696 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification| SkillBarter</title>
-    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Skill Verification | SkillBarter</title>
+
+    <link rel="stylesheet" href="../css/minecraft.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #355640;
+            --secondary: #4F7057;
+            --sage: #E8EEE5;
+            --cream: #F4F3EE;
+            --white: #FFFFFF;
+            --text: #24352A;
+            --muted: #737C72;
+            --border: #DFE5DC;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: "Manrope", Arial, sans-serif;
+        }
+
+        .verification-page {
+            width: 100%;
+            max-width: 1160px;
+            margin: auto;
+            padding: 42px 24px 70px;
+        }
+
+        .verification-header {
+            margin-bottom: 32px;
+        }
+
+        .eyebrow {
+            color: var(--secondary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .verification-header h1 {
+            margin: 12px 0;
+            color: var(--primary);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: clamp(34px, 5vw, 48px);
+            font-weight: 400;
+        }
+
+        .verification-header p {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .verification-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(270px, 0.8fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .verification-card {
+            min-width: 0;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--white);
+            box-shadow: 0 8px 28px rgba(53, 86, 64, 0.04);
+        }
+
+        .card-heading {
+            margin: 0 0 8px;
+            color: var(--primary);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: 27px;
+            font-weight: 400;
+        }
+
+        .card-description {
+            margin: 0 0 26px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #FDFDFC;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(79, 112, 87, 0.12);
+        }
+
+        .form-group textarea {
+            min-height: 105px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group input[type="file"] {
+            padding: 12px;
+            background: var(--cream);
+        }
+
+        .field-hint {
+            display: block;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn-submit,
+        .btn-secondary {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 46px;
+            padding: 12px 19px;
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-submit {
+            border: 1px solid var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--sage);
+        }
+
+        .status-card {
+            margin-bottom: 20px;
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--white);
+        }
+
+        .status-card h3 {
+            margin: 0 0 8px;
+            color: var(--primary);
+            font-size: 15px;
+        }
+
+        .status-card > p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 7px 11px;
+            border-radius: 30px;
+            background: #F1F0E9;
+            color: #6D705F;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .status-badge.submitted {
+            background: #FFF1D7;
+            color: #89621B;
+        }
+
+        .status-badge.verified {
+            background: #E3F2E5;
+            color: #28663A;
+        }
+
+        .status-badge.rejected {
+            background: #FBE8E5;
+            color: #9A3F35;
+        }
+
+        .steps-list {
+            display: grid;
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .step {
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            display: flex;
+            flex: 0 0 34px;
+            height: 34px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--sage);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .step h4 {
+            margin: 2px 0 5px;
+            font-size: 13px;
+        }
+
+        .step p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .trust-note {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 11px;
+            background: var(--sage);
+            color: var(--primary);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .submitted-skill {
+            margin-top: 18px;
+            padding: 17px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #FDFDFC;
+            overflow-wrap: anywhere;
+        }
+
+        .submitted-skill h4 {
+            margin: 0 0 8px;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .submitted-skill p {
+            margin: 5px 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .empty-state {
+            padding: 16px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .form-message {
+            display: none;
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 9px;
+            background: var(--sage);
+            color: var(--primary);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .form-message.error {
+            background: #FBE8E5;
+            color: #9A3F35;
+        }
+
+        .form-message.success {
+            background: #E3F2E5;
+            color: #28663A;
+        }
+
+        @media (max-width: 760px) {
+            .verification-page {
+                padding: 30px 16px 48px;
+            }
+
+            .verification-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .verification-card {
+                padding: 21px;
+            }
+
+            .form-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .form-actions a,
+            .form-actions button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .verification-header h1 {
+                font-size: 34px;
+            }
+
+            .verification-card {
+                padding: 17px;
+            }
+
+            .status-card {
+                padding: 18px;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div id="navbar-container"></div>
-    <main class="hero">
-        <h1>Dashboard</h1>
-        <p class="hero-description">
-            Uh oh, verification pehle ! 
-        </p>
-        <a href="../index.html" class="btn-primary">
-            Back to Home
-        </a>
+
+    <main class="verification-page">
+
+        <header class="verification-header">
+            <span class="eyebrow">Build trust. Share skills.</span>
+
+            <h1>Verify your skills.</h1>
+
+            <p>
+                Your skills deserve to be recognised. Submit certificates,
+                project links, or portfolio work to help other members
+                discover what you can teach with confidence.
+            </p>
+        </header>
+
+        <div class="verification-layout">
+
+            <section class="verification-card">
+                <h2 class="card-heading">Submit a skill</h2>
+
+                <p class="card-description">
+                    Tell us what you know and share evidence that supports
+                    your expertise.
+                </p>
+
+                <form id="verification-form">
+
+                    <div class="form-group">
+                        <label for="skill-name">Skill name *</label>
+                        <input
+                            type="text"
+                            id="skill-name"
+                            name="skillName"
+                            placeholder="e.g. Frontend Development"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skill-category">Skill category *</label>
+                        <select id="skill-category" name="category" required>
+                            <option value="">Choose a category</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Design">Design &amp; Creativity</option>
+                            <option value="Business">Business &amp; Management</option>
+                            <option value="Communication">Communication</option>
+                            <option value="Academics">Academics</option>
+                            <option value="Languages">Languages</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proof-type">Type of proof *</label>
+                        <select id="proof-type" name="proofType" required>
+                            <option value="">Select proof type</option>
+                            <option value="Certificate">Certificate</option>
+                            <option value="Project">Project or practical work</option>
+                            <option value="Portfolio">Portfolio</option>
+                            <option value="Other">Other supporting evidence</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proof-link">Proof link</label>
+                        <input
+                            type="url"
+                            id="proof-link"
+                            name="proofLink"
+                            placeholder="https://github.com/username/project"
+                        >
+                        <span class="field-hint">
+                            Add a shareable link to your certificate,
+                            GitHub project, portfolio, or other evidence.
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proof-file">Upload supporting file</label>
+                        <input
+                            type="file"
+                            id="proof-file"
+                            name="proofFile"
+                            accept=".pdf,.png,.jpg,.jpeg"
+                        >
+                        <span class="field-hint">
+                            PDF, PNG, or JPG. In this demo, the file is
+                            selected locally and is not uploaded to a server.
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skill-description">
+                            Tell us about your skill *
+                        </label>
+                        <textarea
+                            id="skill-description"
+                            name="description"
+                            placeholder="Describe your experience, projects, or what you can confidently teach..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            Submit for verification
+                        </button>
+
+                        <a href="../index.html" class="btn-secondary">
+                            Back to home
+                        </a>
+                    </div>
+
+                    <div
+                        id="form-message"
+                        class="form-message"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+                </form>
+            </section>
+
+            <aside>
+                <section class="status-card">
+                    <h3>Your verification status</h3>
+
+                    <p>
+                        Skills you submit will appear here. Track their
+                        progress as they move through the verification process.
+                    </p>
+
+                    <div id="empty-state" class="empty-state" style="margin-top: 16px;">
+                        No skills submitted yet. Your verified skills will
+                        help build trust within the SkillBarter community.
+                    </div>
+
+                    <div id="submitted-skills"></div>
+                </section>
+
+                <section class="verification-card">
+                    <h2 class="card-heading">How it works</h2>
+
+                    <p class="card-description">
+                        Four simple steps to build a more trustworthy profile.
+                    </p>
+
+                    <div class="steps-list">
+
+                        <div class="step">
+                            <div class="step-number">01</div>
+                            <div>
+                                <h4>Choose your skill</h4>
+                                <p>
+                                    Tell the community what you can teach
+                                    or help others learn.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">02</div>
+                            <div>
+                                <h4>Provide evidence</h4>
+                                <p>
+                                    Share certificates, projects, or
+                                    portfolio work that supports your claim.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">03</div>
+                            <div>
+                                <h4>Get reviewed</h4>
+                                <p>
+                                    Your submission can be reviewed by
+                                    an authorised verifier.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">04</div>
+                            <div>
+                                <h4>Build credibility</h4>
+                                <p>
+                                    Once approved, your skill can display
+                                    a verified status on your profile.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="trust-note">
+                        <strong>Why verify?</strong><br>
+                        SkillBarter is built on mutual learning.
+                        Reliable skill evidence helps members make
+                        more informed decisions about whom to learn from.
+                    </div>
+                </section>
+            </aside>
+
+        </div>
     </main>
+
     <script src="../js/app.js"></script>
+
+    <script>
+        const verificationForm = document.getElementById("verification-form");
+        const submittedSkills = document.getElementById("submitted-skills");
+        const emptyState = document.getElementById("empty-state");
+        const formMessage = document.getElementById("form-message");
+
+        function showMessage(message, type) {
+            formMessage.textContent = message;
+            formMessage.className = "form-message " + type;
+            formMessage.style.display = "block";
+        }
+
+        verificationForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const skillName = document.getElementById("skill-name").value.trim();
+            const category = document.getElementById("skill-category").value;
+            const proofType = document.getElementById("proof-type").value;
+            const proofLink = document.getElementById("proof-link").value.trim();
+            const description = document.getElementById("skill-description").value.trim();
+            const proofFile = document.getElementById("proof-file").files[0];
+
+            if (!skillName || !category || !proofType || !description) {
+                showMessage("Please complete all required fields.", "error");
+                return;
+            }
+
+            if (!proofLink && !proofFile) {
+                showMessage(
+                    "Please provide a proof link or select a supporting file.",
+                    "error"
+                );
+                return;
+            }
+
+            const skillCard = document.createElement("div");
+            skillCard.className = "submitted-skill";
+
+            const title = document.createElement("h4");
+            title.textContent = skillName;
+
+            const categoryText = document.createElement("p");
+            categoryText.textContent = "Category: " + category;
+
+            const proofText = document.createElement("p");
+            proofText.textContent = "Evidence type: " + proofType;
+
+            const descriptionText = document.createElement("p");
+            descriptionText.textContent = description;
+
+            const status = document.createElement("span");
+            status.className = "status-badge submitted";
+            status.textContent = "Submitted";
+
+            skillCard.append(
+                title,
+                categoryText,
+                proofText,
+                descriptionText,
+                status
+            );
+
+            if (proofLink) {
+                const link = document.createElement("a");
+                link.href = proofLink;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = "View proof link";
+                link.style.display = "inline-block";
+                link.style.marginTop = "12px";
+                link.style.color = "#355640";
+                link.style.fontSize = "12px";
+
+                skillCard.appendChild(link);
+            }
+
+            if (proofFile) {
+                const fileText = document.createElement("p");
+                fileText.textContent = "Selected file: " + proofFile.name;
+                skillCard.appendChild(fileText);
+            }
+
+            submittedSkills.prepend(skillCard);
+            emptyState.style.display = "none";
+
+            showMessage(
+                "Submission added successfully! Your skill is marked as Submitted in this demo. It has not been sent to an admin or saved to a database.",
+                "success"
+            );
+
+            verificationForm.reset();
+        });
+    </script>
 </body>
 </html>
+```

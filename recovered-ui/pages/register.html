@@ -3,20 +3,1249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | SkillBarter</title>
-    <link rel="stylesheet" href="../css/style.css">
+
+    <title>Create Account | SkillBarter</title>
+    <link rel="stylesheet" href="../css/minecraft.css">
+
+    <style>
+        :root {
+            --green: #355640;
+            --green-light: #E8EEE5;
+            --cream: #F4F3EE;
+            --text: #26362B;
+            --muted: #788078;
+            --border: #DFE5DC;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: "Manrope", Arial, sans-serif;
+        }
+
+        .register-page {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 55px;
+            align-items: center;
+            width: min(1120px, 100%);
+            margin: auto;
+            padding: 45px 28px 60px;
+        }
+
+        /* Introduction */
+
+        .register-intro {
+            max-width: 440px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .register-intro h1 {
+            margin: 0;
+            color: var(--green);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: clamp(42px, 5vw, 62px);
+            font-weight: 400;
+            line-height: 1.12;
+        }
+
+        .register-intro h1 span {
+            color: #82977E;
+            font-style: italic;
+        }
+
+        .intro-description {
+            max-width: 380px;
+            margin: 22px 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .intro-divider {
+            width: 65px;
+            height: 3px;
+            margin: 28px 0;
+            border-radius: 5px;
+            background: var(--green);
+        }
+
+        .exchange-card {
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .exchange-card h3 {
+            margin: 0 0 7px;
+            color: var(--green);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: 23px;
+            font-weight: 400;
+        }
+
+        .exchange-card > p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .exchange-example {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .exchange-item {
+            padding: 13px 10px;
+            border-radius: 10px;
+            background: var(--green-light);
+            text-align: center;
+        }
+
+        .exchange-item span {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .exchange-item strong {
+            color: var(--green);
+            font-size: 12px;
+        }
+
+        .exchange-arrow {
+            color: var(--green);
+            font-size: 19px;
+        }
+
+        .trust-note {
+            display: flex;
+            gap: 12px;
+            margin-top: 23px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .trust-icon {
+            display: grid;
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 16px;
+        }
+
+        /* Registration form */
+
+        .register-card {
+            width: 100%;
+            max-width: 510px;
+            justify-self: end;
+            padding: clamp(24px, 4vw, 38px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--white);
+            box-shadow: 0 15px 45px rgba(53, 86, 64, 0.06);
+        }
+
+        .card-mark {
+            display: grid;
+            width: 44px;
+            height: 44px;
+            margin-bottom: 20px;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 21px;
+        }
+
+        .register-card h2 {
+            margin: 0 0 8px;
+            color: var(--green);
+            font-family: "DM Serif Display", Georgia, serif;
+            font-size: 31px;
+            font-weight: 400;
+        }
+
+        .card-description {
+            margin: 0 0 25px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 14px;
+        }
+
+        .form-group {
+            min-width: 0;
+            margin-bottom: 17px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            background: #FDFDFC;
+            color: var(--text);
+            font: inherit;
+            font-size: 11px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(53, 86, 64, .10);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #A0A69D;
+        }
+
+        .form-group textarea {
+            min-height: 75px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 55px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 11px;
+            transform: translateY(-50%);
+            padding: 4px 0;
+            border: none;
+            background: transparent;
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .field-hint {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        .terms-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin: 3px 0 20px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .terms-label input {
+            margin-top: 3px;
+            accent-color: var(--green);
+        }
+
+        .terms-label a {
+            color: var(--green);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .register-button {
+            width: 100%;
+            min-height: 46px;
+            padding: 13px 18px;
+            border: 1px solid var(--green);
+            border-radius: 9px;
+            background: var(--green);
+            color: white;
+            font: inherit;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+
+        .register-button:hover {
+            transform: translateY(-1px);
+            background: #496D51;
+        }
+
+        .form-message {
+            display: none;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 11px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        .login-prompt {
+            margin: 20px 0 0;
+            color: var(--muted);
+            font-size: 10px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .login-prompt a {
+            color: var(--green);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .login-prompt a:hover,
+        .terms-label a:hover {
+            text-decoration: underline;
+        }
+
+        .card-footer {
+            margin-top: 22px;
+            padding-top: 17px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 9px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 850px) {
+            .register-page {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                max-width: 600px;
+                padding: 35px 20px 50px;
+            }
+
+            .register-intro {
+                max-width: 540px;
+            }
+
+            .register-intro h1 {
+                font-size: 46px;
+            }
+
+            .register-card {
+                max-width: none;
+                justify-self: stretch;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+            .register-intro h1 {
+                font-size: 40px;
+            }
+
+            .exchange-example {
+                gap: 6px;
+            }
+
+            .exchange-item strong {
+                font-size: 10px;
+            }
+
+            .register-card {
+                padding: 22px 18px;
+            }
+        }
+    /* =========================================
+   MINECRAFT THEME: REGISTRATION PAGE
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --green: #5c9637;
+    --green-light: #dcebc9;
+    --cream: #f3e8c9;
+    --text: #3c3023;
+    --muted: #78674e;
+    --border: #b89a6b;
+    --white: #fff9e9;
+
+    --mc-dark: #315b25;
+    --mc-brown: #795139;
+    --mc-shadow: #4d3825;
+}
+
+/* Page background and layout */
+
+body {
+    background-color: var(--cream);
+    background-image:
+        linear-gradient(45deg, rgba(121,81,57,.045) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(121,81,57,.045) 25%, transparent 25%);
+    background-size: 28px 28px;
+    color: var(--text);
+    font-family: 'Roboto Mono', monospace;
+}
+
+.register-page {
+    width: min(1200px, 100%);
+    grid-template-columns: .9fr 1.1fr;
+    gap: clamp(28px, 5vw, 65px);
+    padding: 55px 30px 75px;
+    align-items: center;
+}
+
+/* Left introduction */
+
+.register-intro {
+    max-width: 460px;
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 9px 12px;
+    margin-bottom: 24px;
+    color: var(--mc-dark);
+    background: #d8e9bc;
+    border: 2px solid #8eaf69;
+    border-radius: 2px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    line-height: 1.8;
+}
+
+.register-intro h1 {
+    color: var(--mc-shadow);
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(23px, 3vw, 35px);
+    line-height: 1.9;
+    letter-spacing: -1px;
+    font-weight: 400;
+}
+
+.register-intro h1 span {
+    color: var(--green);
+    font-style: normal;
+}
+
+.intro-description {
+    max-width: 420px;
+    margin: 20px 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 2;
+}
+
+.intro-divider {
+    width: 75px;
+    height: 7px;
+    margin: 28px 0;
+    border-radius: 0;
+    background: var(--green);
+    box-shadow: 0 4px 0 var(--mc-dark);
+}
+
+/* Skill exchange card */
+
+.exchange-card {
+    padding: 23px;
+    background: #f8edcf;
+    border: 3px solid var(--border);
+    border-radius: 2px;
+    box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,.45),
+        0 5px 0 #c4ad83;
+}
+
+.exchange-card h3 {
+    margin-bottom: 10px;
+    color: var(--mc-shadow);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    font-weight: 400;
+}
+
+.exchange-card > p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+.exchange-example {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.exchange-item {
+    min-width: 0;
+    padding: 14px 8px;
+    background: #dcebc9;
+    border: 2px solid #9cbb7c;
+    border-radius: 2px;
+    box-shadow: inset 0 -4px 0 rgba(49,91,37,.08);
+}
+
+.exchange-item span {
+    color: #6c7f51;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.exchange-item strong {
+    display: block;
+    color: var(--mc-dark);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.exchange-arrow {
+    color: var(--green);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* Trust note */
+
+.trust-note {
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 28px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+.trust-note strong {
+    color: var(--mc-dark);
+}
+
+.trust-icon {
+    width: 38px;
+    height: 38px;
+    border: 2px solid #8eaf69;
+    border-radius: 2px;
+    background: #d8e9bc;
+    color: var(--mc-dark);
+    font-weight: 800;
+}
+
+/* Registration panel */
+
+.register-card {
+    max-width: 540px;
+    padding: clamp(24px, 3.5vw, 38px);
+    background: #fff9e9;
+    border: 3px solid #b89a6b;
+    border-radius: 2px;
+    box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,.5),
+        0 6px 0 #c4ad83,
+        0 14px 30px rgba(77,56,37,.10);
+}
+
+.card-mark {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 22px;
+    background: #dcebc9;
+    color: var(--mc-dark);
+    border: 3px solid #9cbb7c;
+    border-radius: 2px;
+    box-shadow: inset 0 -4px 0 rgba(49,91,37,.10);
+    font-size: 23px;
+}
+
+.register-card h2 {
+    color: var(--mc-shadow);
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(15px, 2vw, 20px);
+    line-height: 1.9;
+    font-weight: 400;
+}
+
+.card-description {
+    margin-bottom: 26px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+/* Form layout */
+
+.form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+}
+
+.form-group {
+    min-width: 0;
+    margin-bottom: 19px;
+}
+
+.form-group label {
+    color: #51412c;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.8;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    padding: 12px;
+
+    color: var(--text);
+    background: #fffdf5;
+    border: 2px solid #cbb58e;
+    border-radius: 2px;
+
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+
+    transition: border-color .18s, box-shadow .18s;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+    border-color: #9cbb7c;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(92,150,55,.16);
+    outline: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9b8a70;
+    opacity: 1;
+}
+
+.form-group textarea {
+    min-height: 95px;
+    resize: vertical;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.field-hint {
+    color: #827158;
+    font-size: 9px;
+    line-height: 1.8;
+}
+
+/* Password visibility controls */
+
+.password-wrap {
+    position: relative;
+    min-width: 0;
+}
+
+.password-wrap input {
+    padding-right: 58px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    padding: 5px;
+    border: 0;
+    background: transparent;
+    color: var(--mc-dark);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.toggle-password:hover {
+    color: var(--green);
+    text-decoration: underline;
+}
+
+/* Terms checkbox */
+
+.terms-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 4px 0 22px;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.9;
+}
+
+.terms-label input {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 4px;
+    accent-color: var(--green);
+    cursor: pointer;
+}
+
+.terms-label a,
+.login-prompt a {
+    color: var(--mc-dark);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Main registration button */
+
+.register-button {
+    display: block;
+    width: 100%;
+    min-height: 49px;
+    padding: 14px 18px;
+
+    color: white;
+    background: #5c9637;
+    border: 2px solid #315b25;
+    border-radius: 2px;
+
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+
+    box-shadow:
+        inset 0 3px 0 rgba(255,255,255,.20),
+        inset 0 -4px 0 rgba(0,0,0,.14),
+        0 4px 0 #315b25;
+
+    transition: background .15s, transform .15s;
+}
+
+.register-button:hover {
+    background: #75b748;
+    transform: translateY(-2px);
+}
+
+.register-button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.register-button:focus-visible,
+.toggle-password:focus-visible {
+    outline: 3px solid #8ebf6c;
+    outline-offset: 3px;
+}
+
+/* Form feedback */
+
+.form-message {
+    display: none;
+    margin-top: 16px;
+    padding: 14px;
+
+    background: #e2efce;
+    color: #315b25;
+    border: 2px solid #9cbb7c;
+    border-radius: 2px;
+
+    font-size: 11px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+}
+
+/* Login link and footer */
+
+.login-prompt {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.9;
+}
+
+.login-prompt a:hover,
+.terms-label a:hover {
+    color: var(--green);
+}
+
+.card-footer {
+    margin-top: 23px;
+    padding-top: 18px;
+    border-top: 2px solid #e0d0ac;
+    color: #89785d;
+    font-size: 9px;
+    line-height: 1.9;
+}
+
+/* Responsive layout */
+
+@media (max-width: 850px) {
+    .register-page {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        max-width: 640px;
+        padding: 38px 22px 55px;
+    }
+
+    .register-intro {
+        max-width: 100%;
+    }
+
+    .register-intro h1 {
+        font-size: clamp(23px, 5vw, 34px);
+    }
+
+    .intro-description {
+        max-width: 520px;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: none;
+        justify-self: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-page {
+        padding: 28px 15px 42px;
+        gap: 28px;
+    }
+
+    .register-intro h1 {
+        font-size: clamp(19px, 6vw, 27px);
+        line-height: 2;
+    }
+
+    .exchange-card {
+        padding: 17px;
+    }
+
+    .exchange-card h3 {
+        font-size: 11px;
+    }
+
+    .exchange-example {
+        gap: 6px;
+    }
+
+    .exchange-item {
+        padding: 11px 5px;
+    }
+
+    .exchange-item strong {
+        font-size: 9px;
+    }
+
+    .exchange-arrow {
+        font-size: 16px;
+    }
+
+    .register-card {
+        padding: 22px 17px;
+    }
+
+    .register-card h2 {
+        font-size: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .register-button,
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        transition: none;
+    }
+}
+    </style>
 </head>
+
 <body>
+
     <div id="navbar-container"></div>
-    <main class="hero">
-        <h1>Dashboard</h1>
-        <p class="hero-description">
-            Register to SkillBarter !
-        </p>
-        <a href="../index.html" class="btn-primary">
-            Back to Home
-        </a>
+
+    <main class="register-page">
+
+        <!-- Left introduction -->
+        <section class="register-intro">
+
+            <span class="eyebrow">Your skills have value</span>
+
+            <h1>
+                Learn more.<br>
+                Share <span>what you know.</span>
+            </h1>
+
+            <p class="intro-description">
+                Join a community where everyone has something to teach
+                and something to learn. Find your match and turn your
+                knowledge into meaningful connections.
+            </p>
+
+            <div class="intro-divider"></div>
+
+            <div class="exchange-card">
+                <h3>Learning goes both ways.</h3>
+
+                <p>
+                    Bring your strengths, discover new interests,
+                    and exchange knowledge without making courses
+                    the centre of your learning journey.
+                </p>
+
+                <div class="exchange-example">
+                    <div class="exchange-item">
+                        <span>You teach</span>
+                        <strong>Web Development</strong>
+                    </div>
+
+                    <div class="exchange-arrow">↔</div>
+
+                    <div class="exchange-item">
+                        <span>You learn</span>
+                        <strong>UI/UX Design</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trust-note">
+                <div class="trust-icon">✓</div>
+
+                <div>
+                    <strong>Build a credible profile.</strong><br>
+                    Add projects, certificates, and work samples to
+                    support the skills you bring to the community.
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right registration form -->
+        <section class="register-card">
+
+            <div class="card-mark">✳</div>
+
+            <h2>Create your account.</h2>
+
+            <p class="card-description">
+                A few details are all you need to start exchanging skills.
+            </p>
+
+            <form id="register-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="full-name">Full name *</label>
+
+                        <input
+                            type="text"
+                            id="full-name"
+                            name="fullName"
+                            placeholder="Your full name"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email address *</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+
+                        <div class="password-wrap">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="password"
+                            >
+                                Show
+                            </button>
+                        </div>
+
+                        <span class="field-hint">
+                            Use at least 8 characters.
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">
+                            Confirm password *
+                        </label>
+
+                        <div class="password-wrap">
+                            <input
+                                type="password"
+                                id="confirm-password"
+                                name="confirmPassword"
+                                placeholder="Re-enter password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                data-target="confirm-password"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="teach-skills">
+                            What can you teach? *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="teach-skills"
+                            name="teachSkills"
+                            placeholder="e.g. HTML, C++, Graphic Design"
+                            required
+                        >
+
+                        <span class="field-hint">
+                            Separate multiple skills with commas.
+                        </span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="learn-skills">
+                            What do you want to learn? *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="learn-skills"
+                            name="learnSkills"
+                            placeholder="e.g. React, UI/UX, Public Speaking"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="bio">A little about you (optional)</label>
+
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            placeholder="Share your interests, experience, or learning goals..."
+                        ></textarea>
+                    </div>
+
+                </div>
+
+                <label class="terms-label">
+                    <input type="checkbox" id="terms" required>
+
+                    <span>
+                        I agree to use SkillBarter respectfully and
+                        understand that my profile details may be used
+                        to facilitate skill exchanges.
+                    </span>
+                </label>
+
+                <button type="submit" class="register-button">
+                    Create my account →
+                </button>
+
+                <div
+                    class="form-message"
+                    id="form-message"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+            </form>
+
+            <p class="login-prompt">
+                Already have an account?
+                <a href="./login.html">Sign in</a>
+            </p>
+
+            <div class="card-footer">
+                Your knowledge is valuable. Your journey starts here.
+            </div>
+
+        </section>
+
     </main>
+
     <script src="../js/app.js"></script>
+
+    <script>
+        const registerForm = document.getElementById("register-form");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm-password");
+        const formMessage = document.getElementById("form-message");
+
+        // Show or hide passwords.
+        document.querySelectorAll(".toggle-password").forEach(button => {
+            button.addEventListener("click", function () {
+                const target = document.getElementById(
+                    button.dataset.target
+                );
+
+                const show = target.type === "password";
+
+                target.type = show ? "text" : "password";
+                button.textContent = show ? "Hide" : "Show";
+            });
+        });
+
+        // Check password confirmation.
+        confirmPassword.addEventListener("input", function () {
+            confirmPassword.setCustomValidity(
+                confirmPassword.value &&
+                confirmPassword.value !== password.value
+                    ? "Passwords do not match."
+                    : ""
+            );
+        });
+
+        password.addEventListener("input", function () {
+            confirmPassword.setCustomValidity(
+                confirmPassword.value &&
+                confirmPassword.value !== password.value
+                    ? "Passwords do not match."
+                    : ""
+            );
+        });
+
+        // Frontend demo only; no account is created or stored.
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity(
+                    "Passwords do not match."
+                );
+
+                confirmPassword.reportValidity();
+                return;
+            }
+
+            formMessage.style.display = "block";
+            formMessage.textContent =
+                "Your registration form is ready. Connect your backend " +
+                "to create an account securely. No account has been created yet.";
+        });
+    </script>
+
 </body>
 </html>
