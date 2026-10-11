@@ -7,7 +7,7 @@ const PROOFS_KEY = "skillbarter_member3_proofs";
 const $ = id => document.getElementById(id);
 
 function readData(key) {
-  // BACKEND INTEGRATION: Replace localStorage reads with Convex queries for pending proofs and review history.
+  // TODO: Replace with authenticated Convex queries.
   try {
     const data = JSON.parse(localStorage.getItem(key) || "[]");
     return Array.isArray(data) ? data : [];
@@ -18,7 +18,7 @@ function readData(key) {
 }
 
 function saveData(skills, proofs) {
-  // BACKEND INTEGRATION: Replace these writes with an authenticated Convex reviewProof mutation that atomically updates proof and skill status.
+  // TODO: Use an admin-only Convex mutation that updates both records.
   try {
     localStorage.setItem(SKILLS_KEY, JSON.stringify(skills));
     localStorage.setItem(PROOFS_KEY, JSON.stringify(proofs));
@@ -49,8 +49,7 @@ function detail(parent, label, value) {
   if (value === undefined || value === null || value === "") return;
 
   const paragraph = document.createElement("p");
-  const strong = text(paragraph, "strong", label + ": ");
-  strong.style.fontWeight = "bold";
+  text(paragraph, "strong", label + ": ");
   paragraph.appendChild(document.createTextNode(String(value)));
   parent.appendChild(paragraph);
 }
@@ -59,7 +58,9 @@ function getCurrentProof(skill, proofs) {
   return proofs
     .filter(proof => proof.userSkillId === skill.id)
     .sort((a, b) =>
-      String(b.createdAt || "").localeCompare(String(a.createdAt || ""))
+      String(b.createdAt || "").localeCompare(
+        String(a.createdAt || "")
+      )
     )[0] || null;
 }
 
@@ -73,8 +74,14 @@ function getReviewStatus(skill, proof) {
   }
 
   if (status === "rejected") return "rejected";
-  if (status === "pending" || status === "submitted" ||
-      status === "under_review") return "pending";
+
+  if (
+    status === "pending" ||
+    status === "submitted" ||
+    status === "under_review"
+  ) {
+    return "pending";
+  }
 
   return "unverified";
 }
@@ -89,6 +96,18 @@ function createCard(skill, proof, showActions) {
   detail(card, "Category", skill.category || "Other");
   detail(card, "Proficiency", skill.proficiency || "Not specified");
 
+  if (skill.learningOutcome?.trim()) {
+    const outcomeBox = document.createElement("div");
+    outcomeBox.className = "learning-outcome";
+
+    text(outcomeBox, "strong", "Expected Learning Outcome");
+    text(outcomeBox, "p", skill.learningOutcome);
+
+    card.appendChild(outcomeBox);
+  } else {
+    detail(card, "Learning Outcome", "Not provided (older skill entry)");
+  }
+
   text(card, "span", status, "status " + status);
 
   detail(card, "Proof Type", proof.type || "Not specified");
@@ -101,13 +120,17 @@ function createCard(skill, proof, showActions) {
     detail(card, "Certificate", proof.details.certificateName);
   }
 
-  if (typeof proof.externalUrl === "string" &&
-      /^https?:\/\//i.test(proof.externalUrl)) {
+  if (
+    typeof proof.externalUrl === "string" &&
+    /^https?:\/\//i.test(proof.externalUrl)
+  ) {
     const paragraph = document.createElement("p");
     const link = text(paragraph, "a", "View submitted evidence");
+
     link.href = proof.externalUrl;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
+
     card.appendChild(paragraph);
   }
 
@@ -125,6 +148,7 @@ function createCard(skill, proof, showActions) {
 
   if (proof.reviewedAt) {
     const reviewedDate = new Date(proof.reviewedAt);
+
     detail(
       card,
       "Reviewed",
@@ -138,12 +162,24 @@ function createCard(skill, proof, showActions) {
     const actions = document.createElement("div");
     actions.className = "actions";
 
-    const approve = text(actions, "button", "Approve", "btn primary");
+    const approve = text(
+      actions,
+      "button",
+      "Approve",
+      "btn primary"
+    );
+
     approve.type = "button";
     approve.dataset.action = "approve";
     approve.dataset.proofId = proof.id;
 
-    const reject = text(actions, "button", "Reject", "btn reject");
+    const reject = text(
+      actions,
+      "button",
+      "Reject",
+      "btn reject"
+    );
+
     reject.type = "button";
     reject.dataset.action = "reject";
     reject.dataset.proofId = proof.id;
@@ -171,7 +207,7 @@ function renderList(id, entries, emptyLabel, showActions) {
 }
 
 function renderAdmin() {
-  // BACKEND INTEGRATION: Fetch only proofs visible to the authenticated admin; enforce admin authorization on the server.
+  // TODO: Query only requests accessible to an authorized admin.
   const skills = readData(SKILLS_KEY);
   const proofs = readData(PROOFS_KEY);
 
@@ -249,9 +285,23 @@ function reviewProof(proofId, action) {
     return;
   }
 
+  if (
+    action === "approve" &&
+    (!skill.learningOutcome ||
+      skill.learningOutcome.trim().length < 20)
+  ) {
+    message(
+      "Cannot approve this skill. A learning outcome of at least " +
+      "20 characters is required. Ask the teacher to update their skill.",
+      true
+    );
+    return;
+  }
+
   if (action === "approve" && !proof.externalUrl) {
     message(
-      "Cannot approve this demo proof because no accessible evidence URL was submitted.",
+      "Cannot approve this demo proof because no accessible " +
+      "evidence URL was submitted.",
       true
     );
     return;
@@ -299,7 +349,7 @@ function reviewProof(proofId, action) {
       : item
   );
 
-  // BACKEND INTEGRATION: Use the Convex reviewProof mutation with a verified admin identity and server-side status validation.
+  // TODO: Enforce admin authorization and review rules in Convex.
   if (!saveData(updatedSkills, updatedProofs)) {
     message("Unable to save the review. Please try again.", true);
     return;

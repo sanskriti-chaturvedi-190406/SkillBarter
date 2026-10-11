@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkillBarter | Sessions & Credits</title>
+  <link rel="stylesheet" href="./sessions.css">
+  <link rel="stylesheet" href="../../theme.css">
+  <script type="module" src="./sessions.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../../../sessions.html">Skill<span>Barter</span></a>
+    <nav aria-label="Main navigation">
+      <a href="../../../sessions.html">Discover</a>
+      <a href="../../../skills.html">My Skills</a>
+      <a href="./sessions.html" aria-current="page">Sessions & Credits</a>
+      <a href="../../../admin.html">Admin</a>
+    </nav>
+  </header>
+  <main class="page-shell">
+    <section class="page-heading">
+      <div><p class="eyebrow">FAIR EXCHANGES</p><h1>Sessions & credits</h1><p class="intro">Both people confirm the session. Credits move only after both confirmations or an admin decision.</p></div>
+      <label class="role-picker" for="viewerRole">Demo view
+        <select id="viewerRole">
+          <option value="learner">Bob · learner</option>
+          <option value="teacher">Alice · teacher</option>
+          <option value="admin">Admin review</option>
+        </select>
+      </label>
+    </section>
+    <p class="demo-notice"><strong>Demo only.</strong> State is stored in this browser. Real confirmations and credit transfers must be authorized and recorded by the backend.</p>
+    <section class="section-block" aria-labelledby="balanceHeading">
+      <div class="section-title"><div><p class="eyebrow">CREDIT BALANCES</p><h2 id="balanceHeading">Reserved for this session</h2></div><button class="button button-quiet" id="resetDemo" type="button">Reset demo</button></div>
+      <div class="balance-grid" id="balanceCards"></div>
+      <p class="section-note">Bob’s 10 credits are held for the one-hour session. They go to Alice after both confirm, or return to Bob if admin cancels it.</p>
+    </section>
+    <section class="section-block" aria-labelledby="sessionHeading">
+      <div class="section-title"><div><p class="eyebrow">YOUR LEARNING</p><h2 id="sessionHeading">Session confirmation</h2></div></div>
+      <div id="sessionList" aria-live="polite"></div>
+    </section>
+    <section class="section-block" id="adminReview" aria-labelledby="adminHeading" hidden>
+      <div class="section-title"><div><p class="eyebrow">NEEDS A DECISION</p><h2 id="adminHeading">Dispute review</h2></div></div>
+      <div id="disputeList"></div>
+    </section>
+    <section class="section-block" aria-labelledby="ledgerHeading">
+      <div class="section-title"><div><p class="eyebrow">ACCOUNT HISTORY</p><h2 id="ledgerHeading">Credit activity</h2></div></div>
+      <div id="ledgerList" class="ledger-list"></div>
+    </section>
+  </main>
+</body>
+</html>

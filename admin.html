@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkillBarter | Admin Verification</title>
+  <link rel="stylesheet" href="./src/admin.css">
+  <link rel="stylesheet" href="./src/theme.css">
+  <script type="module" src="./src/admin.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <a href="./index.html" class="logo">
+      Skill<span>Barter.</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Admin navigation">
+      <a href="./skills.html">My Skills</a>
+      <a href="./src/features/sessions/sessions.html">Session Disputes</a>
+      <a href="./admin.html" class="active" aria-current="page">
+        Admin Panel
+      </a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <p class="eyebrow">ADMIN VERIFICATION</p>
+      <h1>Skill Verification Dashboard</h1>
+      <p>
+        Review submitted teaching evidence, expected learning outcomes,
+        and manage verification requests.
+      </p>
+      <p class="demo-notice">
+        Demo mode: this page is not role-protected.
+      </p>
+    </section>
+
+    <section class="stats" aria-label="Review statistics">
+      <article class="stat-card">
+        <span>Pending Reviews</span>
+        <strong id="pendingCount">0</strong>
+      </article>
+
+      <article class="stat-card">
+        <span>Approved Skills</span>
+        <strong id="approvedCount">0</strong>
+      </article>
+
+      <article class="stat-card">
+        <span>Rejected Skills</span>
+        <strong id="rejectedCount">0</strong>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">AWAITING DECISION</p>
+          <h2>Pending Verification Requests</h2>
+        </div>
+        <button id="refreshButton" class="btn secondary" type="button">
+          Refresh
+        </button>
+      </div>
+
+      <p id="adminMessage" class="message" role="status"></p>
+      <div id="pendingList" class="request-list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">PREVIOUS DECISIONS</p>
+          <h2>Review History</h2>
+        </div>
+      </div>
+
+      <div id="historyList" class="request-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="./index.html" class="logo">
+      Skill<span>Barter.</span>
+    </a>
+    <p>Team Aurora · Admin Verification</p>
+  </footer>
+</body>
+</html>
